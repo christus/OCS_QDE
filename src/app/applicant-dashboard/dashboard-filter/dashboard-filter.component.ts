@@ -40,6 +40,7 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
   userBranch: Array<any>;
   @Input() filterPrefill: any;
   @Output() filterData = new EventEmitter<any>();
+  @Output() clearDatas = new EventEmitter<any>();
   requestData: any;
   constructor(
     private qdeHttp: QdeHttpService,
@@ -279,7 +280,8 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
     this.filterEmployee = [];
     this.filterStatus = [];
     this.filterBranch = [];
-    this.filterData.emit(filterForm);
+    let data={submitted:true,filterForm:filterForm}
+    this.clearDatas.emit(data);
   }
 
   submitFilter(filterForm: any) {

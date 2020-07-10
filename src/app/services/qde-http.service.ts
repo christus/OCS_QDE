@@ -249,7 +249,8 @@ export class QdeHttpService {
     filterEmp?: string,
     filterAppStatus?: string,
     filterStartDate?: string,
-    filterEndDate?: string
+    filterEndDate?: string,
+    applicationStatus?: string
   ) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
@@ -260,7 +261,7 @@ export class QdeHttpService {
       firstName: (search != null) ? search : "",
       fromDate: filterStartDate,
       toDate: filterEndDate,
-      applicationStatus: status,
+      applicationStatus: applicationStatus,
       branchId: filterBranch,
       outputUsers: filterEmp,
       statusFilter: filterAppStatus,
@@ -281,6 +282,59 @@ export class QdeHttpService {
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
+
+
+  // getFilteredPendingApplications(
+  //   search?: string,
+  //   fromDay?: string,
+  //   fromMonth?: string,
+  //   fromYear?: string,
+  //   toDay?: string,
+  //   toMonth?: string,
+  //   toYear?: string,
+  //   assignedTo?: string,
+  //   status?: string,
+  //   currentPage?: string,
+  //   filterBranch?: string,
+  //   filterZone?: string,
+  //   filterRegion?: string,
+  //   filterState?: string,
+  //   filterEmp?: string,
+  //   filterAppStatus?: string,
+  //   filterStartDate?: string,
+  //   filterEndDate?: string
+  // ) {
+  //   const processId = environment.api.dashboard.processId;
+  //   const workflowId = environment.api.dashboard.workflowId;
+  //   const projectId = environment.projectId;
+
+  //   let processVariables = {
+  //     userId: localStorage.getItem("userId"),
+  //     firstName: (search != null) ? search : "",
+  //     fromDate: filterStartDate,
+  //     toDate: filterEndDate,
+  //     applicationStatus: status,
+  //     branchId: filterBranch,
+  //     outputUsers: filterEmp,
+  //     statusFilter: filterAppStatus,
+  //     currentPage: currentPage != "" ? currentPage : "1"
+  //   };
+
+  //   const requestEntity: RequestEntity = {
+  //     processId: processId,
+  //     ProcessVariables: processVariables,
+  //     workflowId: workflowId,
+  //     projectId: projectId
+  //   };
+
+  //   const body = {
+  //     'processVariables':
+  //       JSON.stringify(requestEntity)
+  //   }
+  //   let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+  //   return this.callPost(workflowId, projectId, body);
+  // }
+  
 
   getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string, currentPage?: string) {
     const processId = environment.api.newLeads.processId;

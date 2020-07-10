@@ -65,6 +65,8 @@ export class LeadsListComponent implements OnInit {
   searchTxt: string;
   show: boolean = false;
   isLogoutVisible: boolean;
+  applicationStatus:string;
+  filterisOn:boolean=false;
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
   userFilterDetails: Array<UserDetails>;
@@ -225,7 +227,7 @@ export class LeadsListComponent implements OnInit {
     this.cds.branchList$.subscribe(value =>
       this.branchList = value);
     // if (this.createLead ) {
-    // this.getFilteredLeads();
+    this.getFilteredLeads();
     this.getNewLeads();
     // } else if (this.newLogin || this.documentUpload){
     this.getPendingApplication();
@@ -597,9 +599,16 @@ export class LeadsListComponent implements OnInit {
   }
 
   pageChanged(value) {
+
     let data = value;
-    this.getFilteredLeads(data);
-  }
+    if(this.isFilterApply) {
+      this.getFilterDetails(data)
+    }else {
+      this.getFilteredLeads(data);
+    }
+
+    }
+   
 
   pageChangedFL(value) {
     let data = value;
@@ -612,11 +621,20 @@ export class LeadsListComponent implements OnInit {
   }
   pageChangedPA(value) {
     let data = value;
-    this.getPendingApplication(data);
+    if(this.isFilterApply) {
+      this.getFilterPendingApplicationDetails(data)
+    }else {
+      this.getPendingApplication(data);
+    }
   }
   pageChangedPP(value) {
+
     let data = value;
-    this.getPendingPayment(data);
+    if(this.isFilterApply) {
+      this.getFilterPendingPaymentsDetails(data)
+    }else {
+      this.getPendingPayment(data);
+    }
   }
   btnType: string;
   onMultipleBranch(btnName) {
@@ -753,12 +771,32 @@ export class LeadsListComponent implements OnInit {
       this.isFilterApply = true;
       // this.newLogin = false;
       this.getFilterDetails();
+      //this.getFilterNewLeadDetails();
+      this.getFilterPendingApplicationDetails();
+      this.getFilterPendingPaymentsDetails();
+      /***reshma* */
       // console.log('data555555555555555555555555555555', data)
     } else {
       this.isFilterApply = false;
       this.filterData = null;
     }
   }
+
+  clearDatas(data: any) {
+
+    if (data.submitted === true) {
+      // console.log('data555555555555555555555555555555', data.form.value)
+      this.filterData = data.filterForm;
+      this.getFilteredLeads();
+      this.getNewLeads();
+      this.getPendingApplication();
+      this.getPendingPayment()
+    } else {
+      this.isFilterApply = false;
+      this.filterData = null;
+    }
+  }
+  
 
   // handleChange(event) {
   //   console.log('event!!!!!!!!!!!!', event)
@@ -808,16 +846,28 @@ export class LeadsListComponent implements OnInit {
           console.log("dectypt ", res);
 
           if (res["Error"] && res["Error"] == 0) {
-            this.perPageFL = res['ProcessVariables']['perPage'];
-            this.currentPageFL = res['ProcessVariables']['currentPage'];
+            this.perPage = res['ProcessVariables']['perPage'];
+            this.currentPage = res['ProcessVariables']['currentPage'];
             let totalPages = res['ProcessVariables']['totalPages'];
-            this.totalItemsFL = parseInt(totalPages) * this.perPage;
-            console.log("???" + "this.perPage" + this.perPageFL + "this.currentPage" + this.currentPageFL + "this.totalItems" + this.totalItemsFL);
+            this.totalItems = parseInt(totalPages) * this.perPage;
+            console.log("???" + "this.perPage" + this.perPage + "this.currentPage" + this.currentPage + "this.totalItems" + this.totalItems);
             // Need to Assign all tab values to respected variables  
             
             // this.userFilterDetails = []; // res["ProcessVariables"].userDetails ||
-            this.userDetails = [];
-            this.totalItems = 0;
+            
+
+            if(res["ProcessVariables"].userDetails!=null){
+              this.userDetails = res["ProcessVariables"].userDetails;
+            }else{
+              this.userDetails = [];
+
+            }
+
+            
+            //this.getPendingPayment();
+              
+            
+            //this.totalItems = 0;
             // this.newLeadsDetails
             // this.newPendingApplicationDetails
             // this.newPendingPaymentDetails
@@ -826,8 +876,319 @@ export class LeadsListComponent implements OnInit {
             // if (this.userFilterDetails.length === 0) {
             //   this.isDataNotFound = true
             // }
+            // return;
+            this.userDetails.forEach(el => {
+              el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+              if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                el["queryParams"] = {
+                  tabName: el["auditTrialTabPage"],
+                  page: el["auditTrialPageNumber"],
+                }
+              }
+              else {
+                el["queryParams"] = null;
+              }
+            });
+
+            this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+            this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+          } else if (res["login_required"] && res["login_required"] === true) {
+            this.utilService.clearCredentials();
+          } else {
+
+            if (res["ErrorMessage"]) {
+              alert(res["ErrorMessage"]);
+            } else {
+              console.log("error ", res);
+              this.utilService.clearCredentials();
+            }
             return;
-            this.userFilterDetails.forEach(el => {
+          }
+        },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    } catch (ex) {
+      alert(ex.message);
+    } finally {
+      this.ngxService.stop();
+    }
+  }
+  //second tab//
+  
+  // getFilterNewLeadDetails(currentPage?: string) {
+  //   try {
+  //     this.ngxService.start();
+  //     if (localStorage.getItem("token") && localStorage.getItem("userId")) {
+  //       const startDate = new Date();
+  //       console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+  //       console.log('tempValuetempValuetempValuetempValue', this.requestData)
+  //       this.requestData
+  //       this.service.getNewLeads(
+  //         this.searchTxt,
+  //         this.fromDay.value,
+  //         this.fromMonth.value,
+  //         this.fromYear.value,
+  //         this.toDay.value,
+  //         this.toMonth.value,
+  //         this.toYear.value,
+  //         "",
+  //         this.allStatus,
+  //         currentPage,
+  //         this.requestData.filterBranch,
+  //         this.requestData.filterZone,
+  //         this.requestData.filterRegion,
+  //         this.requestData.filterState,
+  //         this.requestData.filterEmployee,
+  //         this.requestData.filterStatus,
+  //         this.requestData.startDate,
+  //         this.requestData.endDate
+
+  //       ).subscribe(res => {
+  //         console.log("dectypt ", res);
+
+  //         if (res["Error"] && res["Error"] == 0) {
+  //           this.perPageNL = res['ProcessVariables']['perPage'];
+  //           this.currentPageNL = res['ProcessVariables']['currentPage'];
+  //           let totalPages = res['ProcessVariables']['totalPages'];
+  //           this.totalItemsNL = parseInt(totalPages) * this.perPage;
+  //           console.log("???" + "this.perPage" + this.perPageNL + "this.currentPage" + this.currentPageNL + "this.totalItems" + this.totalItemsNL);
+  //           Need to Assign all tab values to respected variables  
+            
+  //           this.userFilterDetails = []; // res["ProcessVariables"].userDetails ||
+            
+          
+  //           if(res["ProcessVariables"].userDetails!=null){
+  //             this.newLeadsDetails = res["ProcessVariables"].userDetails;
+  //           }else{
+  //             this.newLeadsDetails = [];
+
+  //           }
+
+            
+  //           this.getPendingPayment();
+              
+            
+  //           this.totalItems = 0;
+  //           this.newLeadsDetails
+  //           this.newPendingApplicationDetails
+  //           this.newPendingPaymentDetails
+
+  //           debugger;
+  //           if (this.userFilterDetails.length === 0) {
+  //             this.isDataNotFound = true
+  //           }
+  //           return;
+  //           this.userFilterDetails.forEach(el => {
+  //             el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+  //             if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+  //               el["queryParams"] = {
+  //                 tabName: el["auditTrialTabPage"],
+  //                 page: el["auditTrialPageNumber"],
+  //               }
+  //             }
+  //             else {
+  //               el["queryParams"] = null;
+  //             }
+  //           });
+
+  //           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+  //           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+  //         } else if (res["login_required"] && res["login_required"] === true) {
+  //           this.utilService.clearCredentials();
+  //         } else {
+
+  //           if (res["ErrorMessage"]) {
+  //             alert(res["ErrorMessage"]);
+  //           } else {
+  //             console.log("error ", res);
+  //             this.utilService.clearCredentials();
+  //           }
+  //           return;
+  //         }
+  //       },
+  //         error => {
+  //           console.log(error);
+  //         }
+  //       );
+  //     }
+  //   } catch (ex) {
+  //     alert(ex.message);
+  //   } finally {
+  //     this.ngxService.stop();
+  //   }
+  // }
+
+  //third tab//
+  getFilterPendingApplicationDetails(currentPage?: string) {
+    try {
+      this.ngxService.start();
+      if (localStorage.getItem("token") && localStorage.getItem("userId")) {
+        const startDate = new Date();
+        console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+        console.log('tempValuetempValuetempValuetempValue', this.requestData)
+        // this.requestData
+        this.service.getFilteredLeads(
+          this.searchTxt,
+          this.fromDay.value,
+          this.fromMonth.value,
+          this.fromYear.value,
+          this.toDay.value,
+          this.toMonth.value,
+          this.toYear.value,
+          "",
+          this.allStatus,
+          currentPage,
+          this.requestData.filterBranch,
+          this.requestData.filterZone,
+          this.requestData.filterRegion,
+          this.requestData.filterState,
+          this.requestData.filterEmployee,
+          this.requestData.filterStatus,
+          this.requestData.startDate,
+          this.requestData.endDate,
+          "pendingApplication"
+        ).subscribe(res => {
+          console.log("dectypt ", res);
+
+          if (res["Error"] && res["Error"] == 0) {
+            this.perPagePA = res['ProcessVariables']['perPage'];
+            this.currentPagePA = res['ProcessVariables']['currentPage'];
+            let totalPages = res['ProcessVariables']['totalPages'];
+            this.totalItemsPA = parseInt(totalPages) * this.perPage;
+            console.log("???" + "this.perPage" + this.perPagePA + "this.currentPage" + this.currentPagePA + "this.totalItems" + this.totalItemsPA);
+            // Need to Assign all tab values to respected variables  
+            
+            // this.userFilterDetails = []; // res["ProcessVariables"].userDetails ||
+            
+
+            if(res["ProcessVariables"].userDetails!=null){
+              this.newPendingApplicationDetails = res["ProcessVariables"].userDetails;
+            }else{
+              this.newPendingApplicationDetails = [];
+
+            }
+
+            
+            //this.getPendingPayment();
+              
+            
+            //this.totalItems = 0;
+            // this.newLeadsDetails
+            // this.newPendingApplicationDetails
+            // this.newPendingPaymentDetails
+
+            // debugger;
+            // if (this.userFilterDetails.length === 0) {
+            //   this.isDataNotFound = true
+            // }
+            //return;
+            this.newPendingApplicationDetails.forEach(el => {
+              el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+              if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                el["queryParams"] = {
+                  tabName: el["auditTrialTabPage"],
+                  page: el["auditTrialPageNumber"],
+                }
+              }
+              else {
+                el["queryParams"] = null;
+              }
+            });
+
+            this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+            this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+          } else if (res["login_required"] && res["login_required"] === true) {
+            this.utilService.clearCredentials();
+          } else {
+
+            if (res["ErrorMessage"]) {
+              alert(res["ErrorMessage"]);
+            } else {
+              console.log("error ", res);
+              this.utilService.clearCredentials();
+            }
+            return;
+          }
+        },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    } catch (ex) {
+      alert(ex.message);
+    } finally {
+      this.ngxService.stop();
+    }
+  }
+  //fourth tab//
+  getFilterPendingPaymentsDetails(currentPage?: string) {
+    try {
+      this.ngxService.start();
+      if (localStorage.getItem("token") && localStorage.getItem("userId")) {
+        const startDate = new Date();
+        console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+        console.log('tempValuetempValuetempValuetempValue', this.requestData)
+        // this.requestData
+        this.service.getFilteredLeads(
+          this.searchTxt,
+          this.fromDay.value,
+          this.fromMonth.value,
+          this.fromYear.value,
+          this.toDay.value,
+          this.toMonth.value,
+          this.toYear.value,
+          "",
+          this.allStatus,
+          currentPage,
+          this.requestData.filterBranch,
+          this.requestData.filterZone,
+          this.requestData.filterRegion,
+          this.requestData.filterState,
+          this.requestData.filterEmployee,
+          this.requestData.filterStatus,
+          this.requestData.startDate,
+          this.requestData.endDate,
+        "pendingPayment"
+        ).subscribe(res => {
+          console.log("dectypt ", res);
+
+          if (res["Error"] && res["Error"] == 0) {
+            this.perPagePP = res['ProcessVariables']['perPage'];
+            this.currentPagePP = res['ProcessVariables']['currentPage'];
+            let totalPages = res['ProcessVariables']['totalPages'];
+            this.totalItemsPP = parseInt(totalPages) * this.perPage;
+            console.log("???" + "this.perPage" + this.perPagePP + "this.currentPage" + this.currentPagePP + "this.totalItems" + this.totalItemsPP);
+            // Need to Assign all tab values to respected variables  
+            
+            // this.userFilterDetails = []; // res["ProcessVariables"].userDetails ||
+            
+
+            if(res["ProcessVariables"].userDetails!=null){
+              this.newPendingPaymentDetails = res["ProcessVariables"].userDetails;
+            }else{
+              this.newPendingPaymentDetails = [];
+
+            }
+
+            
+            //this.getPendingPayment();
+              
+            
+            //this.totalItems = 0;
+            // this.newLeadsDetails
+            // this.newPendingApplicationDetails
+            // this.newPendingPaymentDetails
+
+            // debugger;
+            // if (this.userFilterDetails.length === 0) {
+            //   this.isDataNotFound = true
+            // }
+            //return;
+            this.newPendingPaymentDetails.forEach(el => {
               el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
               if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
                 el["queryParams"] = {

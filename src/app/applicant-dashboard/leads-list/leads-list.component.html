@@ -21,7 +21,7 @@
         </button>
     </div>
 
-    <app-dashboard-filter *ngIf="isShowFilter" [filterPrefill]="filterData" (filterData)="filterDatas($event)">
+    <app-dashboard-filter *ngIf="isShowFilter" [filterPrefill]="filterData" (filterData)="filterDatas($event)" (clearDatas)="clearDatas($event)">
     </app-dashboard-filter>
 
     <tabs>
