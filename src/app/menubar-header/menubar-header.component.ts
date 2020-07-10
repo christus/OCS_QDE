@@ -65,6 +65,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   saSmId: string;
   createOrUpdatePersonalDetailsBrokerId: Subscription;
   enableSourceId: boolean;
+  enableSourcedBy: boolean;
+  showSourceBy: boolean;
   
 
   constructor(private utilService: UtilService,
@@ -143,9 +145,24 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     this.qdeService.qdeSource.subscribe(v => {
       this.qde = v;
 
+      if(this.qde.application.status) {
+        if(this.qde.application.status !== 1) {
+          this.enableSourcedBy = true;
+        }else {
+          this.enableSourcedBy = false;
+        }
+      }else {
+        this.enableSourcedBy = false;
+      }
+
+      if(this.qde.application.applicationId === "") {
+        this.enableSourcedBy = true;
+      }
+     
+
       // console.log("Apllication status", this.qde);
 
-      // if(this.qde.application.status == 2) {
+      
         // this.enableSourceId = true;
         this.tempSMSAData.push({key: this.qde.application.brokerName,value: this.qde.application.brokerId})
         const saSMId = this.qde.application.brokerId;

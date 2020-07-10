@@ -675,9 +675,22 @@ export class LeadsListComponent implements OnInit {
   }
 
   isLeadDetail: Boolean = false;
-  getLeadDetails(leadId) {
+  getLeadDetails(detail) {
+    let leadId = detail.leadId;
+    let uniqueId = detail.uniqueId;
+    let mobileNumber = detail.mobileNumber;
+    let name = detail.name
+
     this.isLeadDetail = true;
-    let leadValue = this.newLeadsDetails.filter(v => v.leadId == leadId)[0];
+    let leadValue;
+    if(leadId) {
+        leadValue = this.newLeadsDetails.filter(v => v.leadId == leadId)[0];
+    }else if(uniqueId) {
+        leadValue = this.newLeadsDetails.filter(v => v.uniqueId == uniqueId)[0];
+    }else {
+      leadValue = this.newLeadsDetails.filter(v => v.mobileNumber == mobileNumber && v.name == name)[0];
+    }
+
     this.leadDetail = {
       name: leadValue['name'],
       loanType: leadValue['loanType'],

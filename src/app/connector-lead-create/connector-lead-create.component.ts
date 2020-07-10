@@ -138,7 +138,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
             const roles = localStorage.getItem('roles');
             const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-            if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
+            if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
               this.enableSASMId = true;
             } else {
               this.saSmId = ''

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Router } from '@angular/router';
 
@@ -17,6 +17,9 @@ export class ArchiveFileUploadComponent implements OnInit {
 
   isSuccessModal: boolean;
   successMsg: string;
+
+  @ViewChild("archiveOcsFile") archiveOcsFile : ElementRef;
+
 
   constructor( private qdeHttp: QdeHttpService, private router: Router ) { }
 
@@ -64,6 +67,7 @@ export class ArchiveFileUploadComponent implements OnInit {
 
     this.qdeHttp.uploadOcsToArchive(documentInfo).subscribe((response)=> {
       console.log('Response',response)
+      this.archiveOcsFile.nativeElement.value = "";
 
       if(response['ProcessVariables']['status']) {
         this.isSuccessModal = true;

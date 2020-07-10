@@ -61,7 +61,7 @@
             <ul
                 *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
                 <li>
-                    <a class="cur-pointer" (click)="getLeadDetails(detail.leadId)">
+                    <a class="cur-pointer" (click)="getLeadDetails(detail)">
                         <ul class="bs-lead-card">
                             <li>
                                 <span class="initials">AK</span>

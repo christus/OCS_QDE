@@ -4,7 +4,7 @@
         <div class="image-wrapper-container">
           <div class="bs-file">
             <div>
-              <input id="ocsNumber" type="file" accept=".csv"  (change)="setOcsNumber($event)" class="form-control">
+              <input #retrieveOcsFile id="ocsNumber" type="file" accept=".csv"  (change)="setOcsNumber($event)" class="form-control">
               <label for="ocsNumber"><span>Click to Upload Ocs Number</span></label>
             </div>
           </div>

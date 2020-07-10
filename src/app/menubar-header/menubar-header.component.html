@@ -13,7 +13,7 @@
                 </h1>
             </div>
             <div class="right-panel">
-                <h3 class="for-user source-id-pointer" (click)="sourceOverlay()"><span class="user-name">Source Id</span>
+                <h3 class="for-user source-id-pointer" (click)="sourceOverlay()" [ngClass]="{'pointerEvents': enableSourcedBy}"><span class="user-name">Sourced By</span>
                 <br>
                 <h5 class="for-user header_reference_no" ><span class="user-name">{{sourceId}}</span></h5>
                 </h3>
@@ -89,10 +89,10 @@
                 (input)="searchSMSAId($event)"
                 fieldFill
                 required >
-                <label class="inputText" for="smsaId" >SM/SA - ID</label>
+                <label class="inputText" for="smsaId" >SA/SM - ID</label>
                 <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
                 <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
-                <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
+                <div *ngIf="searchSMSA.errors?.pattern">Invalid SA/SM -ID</div>
                 </div>
 
                 <ul class="sm-sa-list">

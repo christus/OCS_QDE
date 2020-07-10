@@ -69,5 +69,8 @@
     font-family: zurich-light;
     padding: 0;
 }
+.pointerEvents {
+    pointer-events: none;
+}
 
 
