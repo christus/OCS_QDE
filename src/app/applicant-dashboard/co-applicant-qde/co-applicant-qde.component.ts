@@ -1414,7 +1414,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
       if(form.value.relationShip.key == "Spouse") {
-        this.selectedMaritialStatus = {"key":"Married","value":"2"};
+        this.selectedMaritialStatus = {
+          key:"Married",
+          value:"2"
+        };
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = this.qde.application.applicants[0].personalDetails.firstName;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = true;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = Number(this.qde.application.applicants[0].incomeDetails.monthlyIncome);
