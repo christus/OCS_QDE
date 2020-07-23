@@ -378,6 +378,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   focusedDate: Date;
 
+  
+
   focusIncorpDate: Date;
 
   SelectionRangeEnd: SelectionRangeEnd;
@@ -407,6 +409,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isNumberMoreThan100cr: boolean;
   tabHide: boolean;
   minMaxValues: Array<MinMax>;
+
+  
 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -4522,6 +4526,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.applicantRelationships = JSON.parse(res['ProcessVariables']['response']);
         this.relationships = this.applicantRelationships.map(v => ({ key: v.relationShip, value: v.relationShipId }));
 
+        if(this.qde.application.applicants[0].maritalStatus.status != "2") {
+
+          this.selectedMaritialStatus = this.defaultItem;
+            const relationshipsData = this.relationships.filter((val) => {
+              if(val.key != "Spouse") {
+                return val
+              }
+            })
+
+            this.relationships = relationshipsData;
+        }
         this.titles = this.applicantRelationships[0].applicantTitles.map(v => ({ key: v.applicantTitle, value: v.applicantTitleId }));
         this.selectedTitle = this.defaultItem;
 

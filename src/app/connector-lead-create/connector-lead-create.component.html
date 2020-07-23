@@ -91,7 +91,7 @@
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
                           #phNumber="ngModel" minlength="10" maxlength="10"
                           pattern="{{regexPattern.mobileNumber}}"
-                          name="mobileNumber" fieldFill required/>
+                          name="mobileNumber" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
                         <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(phNumber.value)">
                                 {{errors.leadCreate.mobileNo.wrong}}</div>
@@ -121,7 +121,7 @@
                           id="zipcode" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
                           pattern="{{regexPattern.pincode}}" (input)="onPinCodeChange($event)" maxlength="6" minlength="6"
-                          name="pincode" #pincode="ngModel" fieldFill required/>
+                          name="pincode" #pincode="ngModel" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
                             <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
                                 class="invalid-feedback">
@@ -137,6 +137,7 @@
                           name="email" #email="ngModel" 
                           pattern="{{regexPattern.email}}"
                           (ngModelChange)="onPreferredEmailChange($event, email)"
+                          (keypress)="keyPress($event)"
                           fieldFill required/>
                         <label for="emailId">Email ID</label>
                         <div *ngIf="(email.touched || email.dirty) && email.invalid"
@@ -153,6 +154,7 @@
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
+                          (keypress)="keyPress($event)"
                           fieldFill 
                           required
                           pattern="{{regexPattern.amount}}"
@@ -193,7 +195,7 @@
                             </kendo-dropdownlist>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" >
                             <input 
                             type="text"
                             autocomplete="off"
@@ -204,6 +206,8 @@
                             [(ngModel)]="valueSMSA"
                             (input)="searchSMSAId($event)"
                             (click)="getSASMIDData()"
+                            (keypress)="keyPress($event)"
+                            [disabled] = "!enableSASMId"
                             fieldFill
                              >
 

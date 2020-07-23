@@ -65,7 +65,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   };
   errors = {
     leadCreate :{
-      firstName:{
+      firstName:{ 
         required: "First Name is mandatory",
         invalid: "Number and Special Characters not allowed",
         length: "Please provide valid First name"
@@ -139,7 +139,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
             const roles = localStorage.getItem('roles');
             const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-            if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
+            if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
               this.enableSASMId = true;
             } else {
               this.saSmId = ''
@@ -303,6 +303,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
   getSASMIDData() {
 
+
     let data = {
       userId: localStorage.getItem('userId')
     }
@@ -323,6 +324,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
   searchSMSAId(event) {
 
+    
     const enterValue = event.target.value;
     if(enterValue.length == 0) {
       this.allSMSAData = [];
@@ -388,6 +390,15 @@ export class ConnectorLeadCreateComponent implements OnInit {
     }
 
   }
+
+  keyPress(event: KeyboardEvent) {
+   //it will not allow space in the input field
+    const inputChar = event.charCode;
+    if (inputChar === 32) {    
+        // invalid character, prevent input
+        event.preventDefault();
+    }
+ }
 
 
 }
