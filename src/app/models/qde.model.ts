@@ -74,6 +74,7 @@ export interface MaritalStatus {
     firstName?: string;
     earning?: boolean;
     amount?: number;
+    dob?: string;
 }
 
 export interface FamilyDetail {
