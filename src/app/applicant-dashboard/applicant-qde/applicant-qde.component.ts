@@ -509,7 +509,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // panslide2: boolean;
 
   ngOnInit() {
-   
+   debugger;
       console.log("selected Branch Id",this.branchID);
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));

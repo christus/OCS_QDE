@@ -1,49 +1,80 @@
 <!-- <app-menubar-header></app-menubar-header> -->
 <main>
-    <div class="main" >
-    <div class="lyt-home">
-        <div class="lyt-tabs">
-            <!-- Back Navigation to add routing  below-->
-            <a *ngIf="showBackButton" class="back-btn backbtn" [routerLink]="['/applicant/', applicationId]"></a> 
-            
-            <div class="lhs">
-                <div class="lhs-inner-wrap">
-                    <span class="icon-thumb">
-                        <img src="assets/images/thumb.png" alt="logo">
-                    </span>
-                    <span class="text">
-                            Application form <span class="cm-line-break"></span>Successfully Completed!
-                    </span>
-                    
-                </div>
-            </div>
-            
-                <div class="rhs" >
-                    <div class="rhs-inner-wrap">
-                        <p class="para">A link has been sent to the customer which has a summary of the application form</p>
-                        <div class="checkbox-wrap" >
+    <div class="main">
+        <div class="lyt-home">
+            <div class="lyt-tabs">
+                <!-- Back Navigation to add routing  below-->
+                <a *ngIf="showBackButton" class="back-btn backbtn" [routerLink]="['/applicant/', applicationId]"></a>
 
-                            <span class="checkgroup-label">Please wait for the customer to</span>   
+                <div class="lhs">
+                    <div class="lhs-inner-wrap">
+                        <span class="icon-thumb">
+                            <img src="assets/images/thumb.png" alt="logo">
+                        </span>
+                        <span class="text">
+                            Application form <span class="cm-line-break"></span>Successfully Completed!
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="rhs">
+                    <div class="rhs-inner-wrap">
+                        <p class="para">A link has been sent to the customer which has a summary of the application form
+                        </p>
+                        <div class="checkbox-wrap">
+
+                            <span class="checkgroup-label">Please wait for the customer to</span>
                             <div class="checkbox-group">
-                                <div class="bs-checkbox" >
-                                    <input   type="checkbox" name="reviewCheck"  id="reviewCheck" [checked]="reviewCheck" disabled/>
+                                <div class="bs-checkbox">
+                                    <input type="checkbox" name="reviewCheck" id="reviewCheck" [checked]="reviewCheck"
+                                        disabled />
                                     <label for="reviewCheck"><span>Review the application form</span></label>
                                 </div>
-                                <div class="bs-checkbox" >
-                                        <input   type="checkbox" name="termsCheck"  id="termsCheck" [checked]="termsCheck" disabled/>
-                                        <label for="termsCheck"><span>Agree to Terms and Conditions and give consent</span></label>
+                                <div class="bs-checkbox">
+                                    <input type="checkbox" name="termsCheck" id="termsCheck" [checked]="termsCheck"
+                                        disabled />
+                                    <label for="termsCheck"><span>Agree to Terms and Conditions and give
+                                            consent</span></label>
                                 </div>
-                                <div class="bs-checkbox" >
-                                    <input   type="checkbox" name="paymentCheck"  id="paymentCheck" [checked]="paymentCheck" disabled/>
-                                    <label for="paymentCheck" ><span>Make payment for the login fee</span></label>
+                                <div class="bs-checkbox">
+                                    <input type="checkbox" name="paymentCheck" id="paymentCheck"
+                                        [checked]="paymentCheck" disabled />
+                                    <label for="paymentCheck"><span>Make payment for the login fee</span></label>
                                 </div>
-                            </div>                        
-                            
+                            </div>
+
 
                         </div>
+
+
+                        <div class="TermsAndCondition-wrapper">
+                            <table class="TermsAndCondition-table">
+                                <thead class="tHead">
+                                    <tr>
+                                        <th>Applicant Name</th>
+                                        <th>Apllicant Type</th>
+                                        <th>T&C accepted status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let detail of ApplicantsTAndCStatus">
+                                        <td>{{detail.applicantName }}</td>
+                                        <td>{{ detail.isMainApplicant ? "Applicant" : "CoApplicant"}}</td>
+                                        <td>
+                                            <div class="">
+                                                <input type="checkbox" id="TermsAndConditionCheckBox"
+                                                    [checked]="detail.termsAndConditionVerified" disabled/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>           
+                </div>
+            </div>
         </div>
-    </div>
     </div>
 </main>

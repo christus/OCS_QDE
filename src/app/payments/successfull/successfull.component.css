@@ -84,7 +84,7 @@ lyt-home .rhs {
 }
 
 
-.lyt-home .rhs .rhs-inner-wrap .para {
+.lyt-home .rhs .table-class .rhs-inner-wrap .para {
   display: block;
   font-size: 1.5vw;
   color: #444;
@@ -105,4 +105,61 @@ lyt-home .rhs {
   font-family: icicihfc;
   position: absolute;
   left: 0.5vw;
+}
+
+.applicant-detail-table{
+  width: 100%;
+  text-align: left;
+}
+
+.TermsAndCondition-wrapper {
+  width: 100%;
+  font-size: 1vw;
+  padding-top: 100px;
+}
+
+
+.TermsAndCondition-table {
+  width: 100%;
+  text-align: left;
+}
+
+.TermsAndCondition-table thead tr th {
+  border-bottom: 2px solid #e66e23;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.TermsAndCondition-table tbody tr td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.TermsAndCondition-table tbody tr td form {
+  text-align: left;
+}
+.TermsAndCondition-table thead tr th form {
+  text-align: left;
+}
+
+.TermsAndCondition-table tbody tr td {
+  width: 16.66%;
+}
+
+.tHead{
+  background: linear-gradient(to bottom, #e66e23 0, #e66e23 22%, #bf3d2c 85%, #bf3d2c 100%);
+  box-shadow: 0 0 21px 0 rgba(0, 0, 0, .09);
+  font-family: zurich-bold;
+  color: #fff;
+
+}
+
+.tBody
+{
+  text-align: center;
+  font: inherit;
+  vertical-align: baseline;
 }
