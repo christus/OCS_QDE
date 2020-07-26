@@ -29,7 +29,7 @@ export const multiSelectStatus = [
     { key: "QDE Started", value: "1" },
     { key: "Lead Assigned", value: "2" },
     { key: "QDE Completed", value: "5" },
-    { key: "KYC Document Uploaded", value: "10" },
+    // { key: "KYC Document Uploaded", value: "10" },
     { key: "Terms and conditions accepted", value: "15" },
     { key: "Cheque Received", value: "16" },
     { key: "Cheque Bounced", value: "17" },
@@ -41,7 +41,7 @@ export const multiSelectStatus = [
     { key: "Eligibility Review Accepted", value: "29" },
     { key: "Eligibility Failed", value: "30" },
     { key: "Eligibility Review Rejected", value: "31" },
-    { key: "Mandatory Document Uploaded", value: "35" },
+    // { key: "Mandatory Document Uploaded", value: "35" },
     { key: "DDE Submitted", value: "40" }
 ];
 
