@@ -51,6 +51,7 @@ export class SuccessfullComponent implements OnInit {
     // const data = { "applicationId": "15183" };
     this.data = { "applicationId": routeVales.applicationId };
     this.qdeHttp.getApplicationStatus(this.data).subscribe(response => {
+      if(response["ProcessVariables"]["status"]){
       this.statusList = response;
       // console.log("status List in sucessfull " + JSON.stringify(response));
      this.reviewCheck = response["ProcessVariables"]["reviewForm"];
@@ -58,7 +59,7 @@ export class SuccessfullComponent implements OnInit {
      this.paymentCheck = response["ProcessVariables"]["loginFeePaid"];
     this.ApplicantsTAndCStatus = response["ProcessVariables"]["applicantTandCStatus"];
     console.log(this.ApplicantsTAndCStatus);
-    
+    }
 
     });
 
