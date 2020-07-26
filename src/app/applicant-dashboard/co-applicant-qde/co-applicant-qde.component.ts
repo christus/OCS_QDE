@@ -1426,12 +1426,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = true;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = Number(this.qde.application.applicants[0].incomeDetails.monthlyIncome);
 
-      }else {
-        this.selectedMaritialStatus = this.defaultItem;
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = '';
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = false;
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
       }
+      // else {
+      //   this.selectedSpouseTitle = this.defaultItem;
+      //   this.selectedMaritialStatus = this.defaultItem;
+      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = '';
+      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = false;
+      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
+      // }
       
       // this.selectedRelationship
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip = form.value.relationShip.value;
@@ -4528,7 +4530,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
         if(this.qde.application.applicants[0].maritalStatus.status != "2") {
 
-          this.selectedMaritialStatus = this.defaultItem;
             const relationshipsData = this.relationships.filter((val) => {
               if(val.key != "Spouse") {
                 return val
