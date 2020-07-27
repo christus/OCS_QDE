@@ -23,7 +23,7 @@ interface ApplicantTermsandCondition{
  
 })
 export class SuccessfullComponent implements OnInit {
-  ApplicantsTAndCStatus:Array<ApplicantTermsandCondition>;
+  ApplicantsTAndCStatus:Array<ApplicantTermsandCondition> = [];
   statusList;
   successForm;
   reviewCheck;
@@ -57,8 +57,8 @@ export class SuccessfullComponent implements OnInit {
      this.reviewCheck = response["ProcessVariables"]["reviewForm"];
      this.termsCheck = response["ProcessVariables"]["termsAndConditions"];
      this.paymentCheck = response["ProcessVariables"]["loginFeePaid"];
-    this.ApplicantsTAndCStatus = response["ProcessVariables"]["applicantTandCStatus"];
-    console.log(this.ApplicantsTAndCStatus);
+    this.ApplicantsTAndCStatus =  response["ProcessVariables"]["applicantTandCStatus"] != undefined ? response["ProcessVariables"]["applicantTandCStatus"] : [];
+    this.ApplicantsTAndCStatus = this.ApplicantsTAndCStatus.reverse();
     }
 
     });
