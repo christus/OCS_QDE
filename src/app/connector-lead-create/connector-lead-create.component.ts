@@ -53,11 +53,13 @@ export class ConnectorLeadCreateComponent implements OnInit {
   saSmId: string;
   selectSASMId: boolean;
   isValidPincode: boolean;
-
+  
   regexPattern={
-    firstName: "[A-Za-z ]+$",
+    // firstName: "[A-Za-z ]+$",
+    firstName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     mobileNumber:"[1-9][0-9]+",
-    address:"^[0-9A-Za-z, _&'/#]+$",
+    // address:"^[0-9A-Za-z, _&'/#]+$",
+    address: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     pincode:"^[1-9][0-9]{5}$",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
@@ -304,6 +306,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
   getSASMIDData() {
 
 
+    if(this.valueSMSA) {
+      return;
+    }
     let data = {
       userId: localStorage.getItem('userId')
     }
@@ -327,6 +332,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     
     const enterValue = event.target.value;
     if(enterValue.length == 0) {
+      this.valueSMSA = ''
       this.allSMSAData = [];
       return;
     }else {
@@ -363,6 +369,40 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.saSmId = data.value;
     this.selectSASMId = true;
     this.allSMSAData = []
+  }
+
+  selectedBranchData(event) {
+    
+    const roles = localStorage.getItem('roles');
+    const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
+
+    if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
+
+        this.valueSMSA = '';
+        this.selectSASMId=false;
+        let data = {
+          userId: localStorage.getItem('userId')
+        }
+    
+        if(this.tempSMSAData.length > 0) {
+          this.allSMSAData = this.tempSMSAData;
+          return;
+        }
+    
+        this.qdeHttp.getSASMID(data).subscribe(res => {
+    
+          console.log('Response',res)
+          // if(res['ProcessVariables']['status'] == true) {
+    
+          // }
+          this.allSMSAData = res['ProcessVariables']['sa_sm_id'];
+          this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+    
+          })
+
+    }
+   
+
   }
 
   onPinCodeChange(event) {

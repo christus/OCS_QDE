@@ -410,6 +410,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   tabHide: boolean;
   minMaxValues: Array<MinMax>;
 
+  applicantSpouseTitles: Array<any>;
+
   
 
   constructor(private renderer: Renderer2,
@@ -541,6 +543,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
       this.titles = lov.LOVS.applicant_title;
+      this.applicantSpouseTitles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
       this.mariedFemaleTitles = this.femaleTitles.filter(v => v.value != "2");
@@ -1425,15 +1428,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = this.qde.application.applicants[0].personalDetails.firstName;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = true;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = Number(this.qde.application.applicants[0].incomeDetails.monthlyIncome);
-
       }
-      // else {
-      //   this.selectedSpouseTitle = this.defaultItem;
-      //   this.selectedMaritialStatus = this.defaultItem;
-      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = '';
-      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = false;
-      //   this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
-      // }
+      
       
       // this.selectedRelationship
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip = form.value.relationShip.value;
@@ -1546,8 +1542,29 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = value;
-      let result = this.setSpouseTitles();
-      console.log("Spouse title" + result);
+
+      if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip == "27") {
+
+        this.spouseTitles = this.applicantSpouseTitles;
+
+        const titleData = this.qde.application.applicants[0].personalDetails.title;
+
+        if(titleData) {
+
+          const filterData = this.spouseTitles.filter((val)=> {
+            if(val.value == titleData) {
+              return val;
+            }
+          })
+          this.selectedSpouseTitle = filterData[0];
+        }
+      } else {
+        this.selectedSpouseTitle = null;
+        let result = this.setSpouseTitles();
+        console.log("Spouse title" + result);
+
+      }
+     
       let occType = this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType;
       this.loadOccupationTypeLovs(occType);
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
