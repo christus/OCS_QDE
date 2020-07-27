@@ -27,19 +27,17 @@
                             <span class="checkgroup-label">Please wait for the customer to</span>
                             <div class="checkbox-group">
                                 <div class="bs-checkbox">
-                                    <input type="checkbox" name="reviewCheck" id="reviewCheck" [checked]="reviewCheck"
-                                        disabled />
+                                    <input type="checkbox" name="reviewCheck" id="reviewCheck" [checked]="reviewCheck" disabled/>
                                     <label for="reviewCheck"><span>Review the application form</span></label>
                                 </div>
                                 <div class="bs-checkbox">
-                                    <input type="checkbox" name="termsCheck" id="termsCheck" [checked]="termsCheck"
-                                        disabled />
+                                    <input type="checkbox" name="termsCheck" id="termsCheck" [checked]="termsCheck" disabled/>
                                     <label for="termsCheck"><span>Agree to Terms and Conditions and give
                                             consent</span></label>
                                 </div>
                                 <div class="bs-checkbox">
                                     <input type="checkbox" name="paymentCheck" id="paymentCheck"
-                                        [checked]="paymentCheck" disabled />
+                                        [checked]="paymentCheck" disabled/>
                                     <label for="paymentCheck"><span>Make payment for the login fee</span></label>
 
                                 </div>
@@ -63,9 +61,9 @@
                                         <td>{{detail.applicantName }}</td>
                                         <td>{{ detail.isMainApplicant ? "Applicant" : "CoApplicant"}}</td>
                                         <td>
-                                            <div>
+                                            <div class="custom-radio">
                                                 <input type="checkbox" id="TermsAndConditionCheckBox"
-                                                    [checked]="detail.termsAndConditionVerified" disabled />
+                                                    [checked]="detail.termsAndConditionVerified" disabled/>
                                             </div>
                                         </td>
                                     </tr>
