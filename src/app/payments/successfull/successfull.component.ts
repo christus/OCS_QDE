@@ -58,7 +58,6 @@ export class SuccessfullComponent implements OnInit {
      this.termsCheck = response["ProcessVariables"]["termsAndConditions"];
      this.paymentCheck = response["ProcessVariables"]["loginFeePaid"];
     this.ApplicantsTAndCStatus =  response["ProcessVariables"]["applicantTandCStatus"] != undefined ? response["ProcessVariables"]["applicantTandCStatus"] : [];
-    this.ApplicantsTAndCStatus = this.ApplicantsTAndCStatus.reverse();
     }
 
     });
