@@ -412,6 +412,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   applicantSpouseTitles: Array<any>;
 
+  disableMaritalStatus: boolean;
+
   
 
   constructor(private renderer: Renderer2,
@@ -851,6 +853,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
       }
     } catch (e) { }
+
+    try{
+
+      if(result.application.applicants[this.coApplicantIndex].personalDetails.relationShip == '27') {
+
+        this.disableMaritalStatus = true;
+      }else {
+        this.disableMaritalStatus = false;
+      }
+
+    } catch(e) {}
 
 
 
@@ -1421,6 +1434,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
       if(form.value.relationShip.key == "Spouse") {
+        this.disableMaritalStatus = true;
         this.selectedMaritialStatus = {
           key:"Married",
           value:"2"
@@ -1428,6 +1442,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = this.qde.application.applicants[0].personalDetails.firstName;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = true;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = Number(this.qde.application.applicants[0].incomeDetails.monthlyIncome);
+      }else {
+        this.disableMaritalStatus = false;
       }
       
       
