@@ -421,3 +421,7 @@ input[type="text"]:invalid {
     overflow-wrap: break-word;
     padding: .5vw;
 }
+
+.disabledEvents{
+    pointer-events: none;
+}
