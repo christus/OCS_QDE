@@ -22,12 +22,14 @@ export const statuses = {
     "Eligibility Review Rejected": "31",
     "Mandatory Document Uploaded": "35",
     "DDE Submitted": "40",
-    "Lead Assigned": "2"
+    "Lead Assigned": "2",
+    "Lead From L2RM": "3"
 }
 
 export const multiSelectStatus = [
     { key: "QDE Started", value: "1" },
     { key: "Lead Assigned", value: "2" },
+    { key: "Lead From L2RM", value: "3" },
     { key: "QDE Completed", value: "5" },
     // { key: "KYC Document Uploaded", value: "10" },
     { key: "Terms and conditions accepted", value: "15" },

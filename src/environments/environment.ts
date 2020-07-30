@@ -9,7 +9,8 @@ export const environment = {
   production: false,
   status: {
     QDECREATED: "1",
-    QDELEADASSIGNED: "2"
+    QDELEADASSIGNED: "2",
+    QDELEADASSIGNEDL2RM: "3"
   },
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -529,6 +530,10 @@ export const environment = {
     getConnectorRP: {
       workflowId:"958f1efeb15711eab7620242ac110002",
       processId: "95e0909ab15711eab36d0242ac110002"
+    },
+    getLeadtoLeadAllBranch: {
+      workflowId:"4504e6349f1011ea93f40242ac110002",
+      processId: "008b9cfcd1c211eab1220242ac110002"
     }
 
   },

@@ -189,7 +189,7 @@
 
                         <div class="form-group">
                             <span class="control-title">Branch Name</span>
-                            <kendo-dropdownlist
+                            <!-- <kendo-dropdownlist
                               [defaultItem]="defaultItem"
                               class="form-control"
                               name="branchList"
@@ -198,8 +198,13 @@
                               valueField="value"
                               (selectionChange)= "selectedBranchData($event)"
                               [(ngModel)]="branchId">selectedLoanType
-                              <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
-                            </kendo-dropdownlist>
+                            </kendo-dropdownlist> -->
+                            <ng-multiselect-dropdown class="form-control" [placeholder]="'Choose your branch'" [data]="branchList" [settings]="dropdownSettings" (onSelect)="selectedBranchData($event)"
+                            [(ngModel)]="branchId" name="branchList"
+                            (onFilterChange)="getAllBranch($event)"
+                            required>
+                          </ng-multiselect-dropdown>
+                            
                         </div>
 
                         <div class="form-group" >
