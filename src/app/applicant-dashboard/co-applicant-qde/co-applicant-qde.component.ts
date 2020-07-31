@@ -428,7 +428,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     private ngxService: NgxUiLoaderService) {
     this.qde = this.qdeService.defaultValue;
 
-
     this.isMobile = this.mobileService.isMobile;
 
     this.cds.changeMenuBarShown(true);
@@ -4543,7 +4542,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   changedRelationship(event) {
-
     if (event.value != 0) {
       this.titles = this.applicantRelationships.find(v => v.relationShipId == event.value).applicantTitles.map(v => ({ key: v.applicantTitle, value: v.applicantTitleId }));
       this.selectedTitle = this.defaultItem;
@@ -4576,8 +4574,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(this.qde.application.applicants[0].maritalStatus.status != "2") {
 
             const relationshipsData = this.relationships.filter((val) => {
-              if(val.key != "Spouse") {
-                return val
+             
+              if(this.qde.application.applicants[0].maritalStatus.status != "1" ){
+                if(val.key != "Spouse") {
+                  return val
+                }
+              }
+              else{
+                if(val.key != "Spouse" && val.key != "Son" && val.key != "Daughter") {
+                  return val
+                }
               }
             })
 
