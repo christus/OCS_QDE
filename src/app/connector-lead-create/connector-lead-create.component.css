@@ -423,8 +423,6 @@
         text-transform: uppercase;
     }
 
-    
-      
       ::ng-deep .multiselect-dropdown  {
         line-height: 2vw;
       }
