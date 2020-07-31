@@ -146,6 +146,10 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
             this.userRegion = res.ProcessVariables.regionList;
             this.tempBranch = this.filterEmployee.length;
             this.userEmployee = res.ProcessVariables.userList;
+
+            //this.getFilterUserBranchDetails(result);
+  //           this.userEmployee = Array.from(result.split(","));
+
             this.userStatus = res.ProcessVariables.statusFilter;
 
             if (this.filterEmployee.length !== this.tempBranch) {
