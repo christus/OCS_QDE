@@ -263,7 +263,7 @@ export class QdeHttpService {
       toDate: filterEndDate,
       applicationStatus: applicationStatus,
       branchId: filterBranch,
-      outputUsers: filterEmp,
+      userList: filterEmp,
       statusFilter: filterAppStatus,
       currentPage: currentPage != "" ? currentPage : "1"
     };

@@ -773,12 +773,12 @@ export class LeadsListComponent implements OnInit {
       this.requestData.filterState = tempValue.toString();
       tempValue = [];
 
-      // this.filterData.filterEmployee.map((item) => {
-      //   if (item !== null) {
-      //     tempValue.push(item.value)
-      //   }
-      // });
-      this.requestData.filterEmployee = this.filterData.filterEmployee.toString();
+       this.filterData.filterEmployee.map((item) => {
+         if (item !== null) {
+           tempValue.push(item.value)
+         }
+       });
+      this.requestData.filterEmployee = tempValue.toString();
       this.requestData.startDate = this.filterData.startDate !== null ? this.getFormattedDate(this.filterData.startDate) : null;
       this.requestData.endDate = this.filterData.endDate !== null && this.filterData.endDate !== undefined ? this.getFormattedDate(this.filterData.endDate) : null;
       // console.log('tempValuetempValuetempValuetempValue', this.requestData, 'this.filterData', this.filterData)
