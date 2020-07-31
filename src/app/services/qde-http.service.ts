@@ -3998,28 +3998,28 @@ export class QdeHttpService {
 
 
 
-  getUserEmpDetails(data) {
-    const processId = environment.api.userEmployee.processId;
-    const projectId = environment.api.userEmployee.projectId;
-    const workflowId = environment.api.userEmployee.processId;
+  // getUserEmpDetails(data) {
+  //   const processId = environment.api.userEmployee.processId;
+  //   const projectId = environment.api.userEmployee.projectId;
+  //   const workflowId = environment.api.userEmployee.processId;
 
 
-    const requestEntity: RequestEntity = {
-      ProcessVariables: data,
-      processId: processId,
-      workflowId: workflowId,
-      projectId: projectId,
-    };
+  //   const requestEntity: RequestEntity = {
+  //     ProcessVariables: data,
+  //     processId: processId,
+  //     workflowId: workflowId,
+  //     projectId: projectId,
+  //   };
 
 
-    const body = {
-      'processVariables':
-        JSON.stringify(requestEntity)
-    };
+  //   const body = {
+  //     'processVariables':
+  //       JSON.stringify(requestEntity)
+  //   };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
-    return this.callPost(workflowId, projectId, body);
-  }
+  //   let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+  //   return this.callPost(workflowId, projectId, body);
+  // }
 
 
   getConnectorRP(data) {
@@ -4028,6 +4028,31 @@ export class QdeHttpService {
     const workflowId = environment.api.getConnectorRP.workflowId;
     const projectId = environment.projectId;
 
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
+
+
+  getLeadtoLeadAllBranch(data) {
+
+    const processId = environment.api.getLeadtoLeadAllBranch.processId;
+    const workflowId = environment.api.getLeadtoLeadAllBranch.workflowId;
+    const projectId = environment.projectId;
+
+  
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: data,

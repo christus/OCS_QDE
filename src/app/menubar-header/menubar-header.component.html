@@ -89,10 +89,10 @@
                 (input)="searchSMSAId($event)"
                 fieldFill
                 required >
-                <label class="inputText" for="smsaId" >SA/SM - ID</label>
+                <label class="inputText" for="smsaId" >CONNECTOR/DMA</label>
                 <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
                 <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
-                <div *ngIf="searchSMSA.errors?.pattern">Invalid SA/SM -ID</div>
+                <div *ngIf="searchSMSA.errors?.pattern">Invalid CONNECTOR/DMA</div>
                 </div>
 
                 <ul class="sm-sa-list">

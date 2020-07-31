@@ -51,7 +51,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   allSMSAData: any;
   tempSMSAData: any;
   saSmId: string;
-  selectSASMId: boolean;
+  selectSASMId: boolean = true;
   isValidPincode: boolean;
   
   regexPattern={
@@ -101,15 +101,27 @@ export class ConnectorLeadCreateComponent implements OnInit {
     }
   };
   
+  // dropdownSettings = {
+  //   singleSelection: true,
+  //   idField: 'value',
+  //   textField: 'key',    
+  //   itemsShowLimit: 3,
+  //   allowSearchFilter: true,
+  //   closeDropDownOnSelection: true
+  // };
+
   dropdownSettings = {
     singleSelection: true,
-    idField: 'value',
-    textField: 'key',    
-    itemsShowLimit: 3,
+    idField: "value",
+    textField: "key",
+    itemsShowLimit: 2,
     allowSearchFilter: true,
     closeDropDownOnSelection: true
   };
+
+  
   branchList:Array<Item>;
+  storeLocalBranchList:Array<Item>;
   branchId: Item;
   enableSASMId: boolean;
   public defaultItem = environment.defaultItem
@@ -141,9 +153,13 @@ export class ConnectorLeadCreateComponent implements OnInit {
             const roles = localStorage.getItem('roles');
             const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-            if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
+            if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
               this.enableSASMId = true;
+
+              this.commonDataService.branchList$.subscribe( value =>
+                this.branchList = value);
             } else {
+              this.getAllBranch('')
               this.saSmId = ''
               this.enableSASMId = false;
             }
@@ -151,8 +167,29 @@ export class ConnectorLeadCreateComponent implements OnInit {
             
         
 
-    this.commonDataService.branchList$.subscribe( value =>
-      this.branchList = value);
+   
+  }
+
+  getAllBranch(value) {
+
+    const roles = localStorage.getItem('roles');
+    const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
+
+    if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
+      return;
+    }
+    const branchData = {
+      branch: value
+    }
+
+    this.qdeHttp.getLeadtoLeadAllBranch(branchData).subscribe(res => {
+      console.log(res)
+      if(value == '') {
+        this.storeLocalBranchList = res['ProcessVariables']['branchList']
+      }
+      this.branchList = (res['ProcessVariables']['branchList'])?(res['ProcessVariables']['branchList']):this.storeLocalBranchList
+
+    })
   }
 
   ngOnInit() {
@@ -193,14 +230,15 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.qde.application.leadCreate.mobileNumber = parseInt(this.qde.application.leadCreate.mobileNumber+"");
     this.qde.application.leadCreate.zipcode = parseInt(this.qde.application.leadCreate.zipcode+"");
     // this.qde.application.leadCreate.saSmId = '';
-    this.qde.application.leadCreate.saSmId = this.saSmId;
+    this.qde.application.leadCreate.saSmId = this.saSmId || '';
     
+    const branchValue = (this.branchId)?(this.branchId[0].value):''
     
     let data = Object.assign({}, this.qde.application.leadCreate);
     data['loanType'] = parseInt(this.selectedLoanType.value+"");
     data['userId'] = parseInt(localStorage.getItem('userId'));
     data['dnd'] = this.dnd;
-    data['branch'] =this.branchId.value;
+    data['branch'] = branchValue;
     // data['saSmId'] = this.saSmId;
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
@@ -309,6 +347,13 @@ export class ConnectorLeadCreateComponent implements OnInit {
     if(this.valueSMSA) {
       return;
     }
+    
+
+    if(this.tempSMSAData.length > 0) {
+      this.allSMSAData = this.tempSMSAData;
+      return;
+    }
+
     let data = {
       userId: localStorage.getItem('userId')
     }
@@ -332,15 +377,18 @@ export class ConnectorLeadCreateComponent implements OnInit {
     
     const enterValue = event.target.value;
     if(enterValue.length == 0) {
-      this.valueSMSA = ''
+      this.selectSASMId = true;
+      this.valueSMSA = '';
+      this.saSmId = '';
       this.allSMSAData = [];
       return;
     }else {
+      this.selectSASMId = false;
       this.allSMSAData = this.tempSMSAData;
     }
 
 
-    this.selectSASMId = false;
+    
     let data = {
       userId: localStorage.getItem('userId')
     }
@@ -372,11 +420,11 @@ export class ConnectorLeadCreateComponent implements OnInit {
   }
 
   selectedBranchData(event) {
-    
+    return;
     const roles = localStorage.getItem('roles');
     const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-    if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
+    if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma'))  {
 
         this.valueSMSA = '';
         this.selectSASMId=false;
@@ -438,6 +486,11 @@ export class ConnectorLeadCreateComponent implements OnInit {
         // invalid character, prevent input
         event.preventDefault();
     }
+ }
+
+ onFilterChange(event) {
+
+  console.log(event)
  }
 
 

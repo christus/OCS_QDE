@@ -22,28 +22,30 @@ export const statuses = {
     "Eligibility Review Rejected": "31",
     "Mandatory Document Uploaded": "35",
     "DDE Submitted": "40",
-    "Lead Assigned": "2"
+    "Lead Assigned": "2",
+    "Lead From L2RM": "3"
 }
 
-export const multiSelectStatus = [
-    { key: "QDE Started", value: "1" },
-    { key: "Lead Assigned", value: "2" },
-    { key: "QDE Completed", value: "5" },
-    // { key: "KYC Document Uploaded", value: "10" },
-    { key: "Terms and conditions accepted", value: "15" },
-    { key: "Cheque Received", value: "16" },
-    { key: "Cheque Bounced", value: "17" },
-    { key: "Login Fee Paid", value: "20" },
-    { key: "Eligibility Passed", value: "25" },
-    { key: "Eligibility for review", value: "26" },
-    { key: "Eligibility Accepted", value: "27" },
-    { key: "Eligibility Rejected", value: "28" },
-    { key: "Eligibility Review Accepted", value: "29" },
-    { key: "Eligibility Failed", value: "30" },
-    { key: "Eligibility Review Rejected", value: "31" },
-    // { key: "Mandatory Document Uploaded", value: "35" },
-    { key: "DDE Submitted", value: "40" }
-];
+
+// export const multiSelectStatus = [
+//     { key: "QDE Started", value: "1" },
+//     { key: "Lead Assigned", value: "2" },
+//     { key: "QDE Completed", value: "5" },
+//     //{ key: "KYC Document Uploaded", value: "10" },
+//     { key: "Terms and conditions accepted", value: "15" },
+//     { key: "Cheque Received", value: "16" },
+//     { key: "Cheque Bounced", value: "17" },
+//     { key: "Login Fee Paid", value: "20" },
+//     { key: "Eligibility Passed", value: "25" },
+//     { key: "Eligibility for review", value: "26" },
+//     { key: "Eligibility Accepted", value: "27" },
+//     { key: "Eligibility Rejected", value: "28" },
+//     { key: "Eligibility Review Accepted", value: "29" },
+//     { key: "Eligibility Failed", value: "30" },
+//     { key: "Eligibility Review Rejected", value: "31" },
+//    // { key: "Mandatory Document Uploaded", value: "35" },
+//     { key: "DDE Submitted", value: "40" }
+// ];
 
 export const screenPages = {
     "applicantDetails": "ApplicantDetails",

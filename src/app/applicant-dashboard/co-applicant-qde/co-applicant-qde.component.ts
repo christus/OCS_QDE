@@ -1120,6 +1120,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     if (getQdeStatus == 2) {
                       evnQDE = environment['status']['QDELEADASSIGNED'];
                     }
+                    if(getQdeStatus == 3) {
+                      evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                    }
                     this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                       if (response["ProcessVariables"]["status"] == true) {
                         // this.cds.changePanSlide(true);
@@ -1200,6 +1203,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 let evnQDE = environment['status']['QDECREATED'];
                 if (getQdeStatus == 2) {
                   evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+                if(getQdeStatus == 3) {
+                  evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
                 }
 
                 this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
@@ -1313,6 +1319,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     if (getQdeStatus == 2) {
                       evnQDE = environment['status']['QDELEADASSIGNED'];
                     }
+                    if(getQdeStatus == 3) {
+                      evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                    }
                     this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                       if (response["ProcessVariables"]["status"] == true) {
                         // this.cds.changePanSlide2(true);
@@ -1379,6 +1388,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 let evnQDE = environment['status']['QDECREATED'];
                 if (getQdeStatus == 2) {
                   evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+                if(getQdeStatus == 3) {
+                  evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
                 }
                 this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                   if (response["ProcessVariables"]["status"] == true) {
