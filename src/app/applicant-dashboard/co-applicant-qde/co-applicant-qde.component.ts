@@ -378,6 +378,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   focusedDate: Date;
 
+  
+
   focusIncorpDate: Date;
 
   SelectionRangeEnd: SelectionRangeEnd;
@@ -407,6 +409,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isNumberMoreThan100cr: boolean;
   tabHide: boolean;
   minMaxValues: Array<MinMax>;
+
+  applicantSpouseTitles: Array<any>;
+
+  disableMaritalStatus: boolean;
+
+  
 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -537,6 +545,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
       this.titles = lov.LOVS.applicant_title;
+      this.applicantSpouseTitles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
       this.mariedFemaleTitles = this.femaleTitles.filter(v => v.value != "2");
@@ -845,6 +854,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
     } catch (e) { }
 
+    try{
+
+      if(result.application.applicants[this.coApplicantIndex].personalDetails.relationShip == '27') {
+
+        this.disableMaritalStatus = true;
+      }else {
+        this.disableMaritalStatus = false;
+      }
+
+    } catch(e) {}
+
 
 
 
@@ -1101,6 +1121,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     if (getQdeStatus == 2) {
                       evnQDE = environment['status']['QDELEADASSIGNED'];
                     }
+                    if(getQdeStatus == 3) {
+                      evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                    }
                     this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                       if (response["ProcessVariables"]["status"] == true) {
                         // this.cds.changePanSlide(true);
@@ -1181,6 +1204,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 let evnQDE = environment['status']['QDECREATED'];
                 if (getQdeStatus == 2) {
                   evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+                if(getQdeStatus == 3) {
+                  evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
                 }
 
                 this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
@@ -1294,6 +1320,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     if (getQdeStatus == 2) {
                       evnQDE = environment['status']['QDELEADASSIGNED'];
                     }
+                    if(getQdeStatus == 3) {
+                      evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                    }
                     this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                       if (response["ProcessVariables"]["status"] == true) {
                         // this.cds.changePanSlide2(true);
@@ -1361,6 +1390,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 if (getQdeStatus == 2) {
                   evnQDE = environment['status']['QDELEADASSIGNED'];
                 }
+                if(getQdeStatus == 3) {
+                  evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                }
                 this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                   if (response["ProcessVariables"]["status"] == true) {
                     // this.cds.changePanSlide2(true);
@@ -1414,6 +1446,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
       if(form.value.relationShip.key == "Spouse") {
+        this.disableMaritalStatus = true;
         this.selectedMaritialStatus = {
           key:"Married",
           value:"2"
@@ -1421,13 +1454,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = this.qde.application.applicants[0].personalDetails.firstName;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = true;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = Number(this.qde.application.applicants[0].incomeDetails.monthlyIncome);
-
       }else {
-        this.selectedMaritialStatus = this.defaultItem;
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = '';
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = false;
-        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
+        this.disableMaritalStatus = false;
       }
+      
       
       // this.selectedRelationship
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip = form.value.relationShip.value;
@@ -1540,8 +1570,29 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = value;
-      let result = this.setSpouseTitles();
-      console.log("Spouse title" + result);
+
+      if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip == "27") {
+
+        this.spouseTitles = this.applicantSpouseTitles;
+
+        const titleData = this.qde.application.applicants[0].personalDetails.title;
+
+        if(titleData) {
+
+          const filterData = this.spouseTitles.filter((val)=> {
+            if(val.value == titleData) {
+              return val;
+            }
+          })
+          this.selectedSpouseTitle = filterData[0];
+        }
+      } else {
+        this.selectedSpouseTitle = null;
+        let result = this.setSpouseTitles();
+        console.log("Spouse title" + result);
+
+      }
+     
       let occType = this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType;
       this.loadOccupationTypeLovs(occType);
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
@@ -4522,6 +4573,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.applicantRelationships = JSON.parse(res['ProcessVariables']['response']);
         this.relationships = this.applicantRelationships.map(v => ({ key: v.relationShip, value: v.relationShipId }));
 
+        if(this.qde.application.applicants[0].maritalStatus.status != "2") {
+
+            const relationshipsData = this.relationships.filter((val) => {
+              if(val.key != "Spouse") {
+                return val
+              }
+            })
+
+            this.relationships = relationshipsData;
+        }
         this.titles = this.applicantRelationships[0].applicantTitles.map(v => ({ key: v.applicantTitle, value: v.applicantTitleId }));
         this.selectedTitle = this.defaultItem;
 

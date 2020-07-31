@@ -8,6 +8,14 @@ import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 import { statuses } from 'src/app/app.constants';
 
+
+interface ApplicantTermsandCondition{
+  applicantId:number,
+  applicantName:string,
+  isMainApplicant:boolean,
+  termsAndConditions:boolean
+}
+
 @Component({
   selector: 'app-successfull',
   templateUrl: './successfull.component.html',
@@ -15,6 +23,7 @@ import { statuses } from 'src/app/app.constants';
  
 })
 export class SuccessfullComponent implements OnInit {
+  ApplicantsTAndCStatus:Array<ApplicantTermsandCondition> = [];
   statusList;
   successForm;
   reviewCheck;
@@ -42,11 +51,14 @@ export class SuccessfullComponent implements OnInit {
     // const data = { "applicationId": "15183" };
     this.data = { "applicationId": routeVales.applicationId };
     this.qdeHttp.getApplicationStatus(this.data).subscribe(response => {
+      if(response["ProcessVariables"]["status"]){
       this.statusList = response;
       // console.log("status List in sucessfull " + JSON.stringify(response));
      this.reviewCheck = response["ProcessVariables"]["reviewForm"];
      this.termsCheck = response["ProcessVariables"]["termsAndConditions"];
      this.paymentCheck = response["ProcessVariables"]["loginFeePaid"];
+    this.ApplicantsTAndCStatus =  response["ProcessVariables"]["applicantTandCStatus"] != undefined ? response["ProcessVariables"]["applicantTandCStatus"] : [];
+    }
 
     });
 

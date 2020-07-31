@@ -4045,4 +4045,29 @@ export class QdeHttpService {
 
   }
 
+
+  getLeadtoLeadAllBranch(data) {
+
+    const processId = environment.api.getLeadtoLeadAllBranch.processId;
+    const workflowId = environment.api.getLeadtoLeadAllBranch.workflowId;
+    const projectId = environment.projectId;
+
+  
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
+
 }

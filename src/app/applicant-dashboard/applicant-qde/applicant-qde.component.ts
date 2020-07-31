@@ -509,7 +509,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // panslide2: boolean;
 
   ngOnInit() {
-   
       console.log("selected Branch Id",this.branchID);
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
@@ -1288,6 +1287,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   if(getQdeStatus == 2) {
                     evnQDE = environment['status']['QDELEADASSIGNED'];
                   }
+                  if(getQdeStatus == 3) {
+                    evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                  }
                   this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                     if (response["ProcessVariables"]["status"] == true) {
                       // this.cds.changePanSlide(true);
@@ -1377,6 +1379,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   let evnQDE = environment['status']['QDECREATED'];
                   if(getQdeStatus == 2) {
                     evnQDE = environment['status']['QDELEADASSIGNED'];
+                  }
+                  if(getQdeStatus == 3) {
+                    evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
                   }
               this.setStatusApiSub = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                 if (response["ProcessVariables"]["status"] == true) {
@@ -1500,6 +1505,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   if(getQdeStatus == 2) {
                     evnQDE = environment['status']['QDELEADASSIGNED'];
                   }
+                  if(getQdeStatus == 3) {
+                    evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
+                  }
                   this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                     if (response["ProcessVariables"]["status"] == true) {
                       // this.cds.changePanSlide2(true);
@@ -1563,6 +1571,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   let evnQDE = environment['status']['QDECREATED'];
                   if(getQdeStatus == 2) {
                     evnQDE = environment['status']['QDELEADASSIGNED'];
+                  }
+                  if(getQdeStatus == 3) {
+                    evnQDE = environment['status']['QDELEADASSIGNEDL2RM'];
                   }
               this.setStatusApiSub2 = this.qdeHttp.setStatusApi(applicationId, evnQDE).subscribe((response) => {
                 if (response["ProcessVariables"]["status"] == true) {

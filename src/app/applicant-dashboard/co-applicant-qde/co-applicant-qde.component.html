@@ -961,7 +961,7 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off" #maritalStatusForm="ngForm" (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2, maritalSlider1)">
-                                                <div class="form-wrap">
+                                                <div class="form-wrap" [ngClass]="{'disabledEvents': disableMaritalStatus}">
                                                     <div class="form-group">
                                                         <span class="control-title">Marital Status</span>
 
