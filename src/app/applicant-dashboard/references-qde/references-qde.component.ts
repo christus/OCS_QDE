@@ -156,6 +156,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   titles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any> = [];
+  relationships1:Array<any> = [];
   loanpurposes: Array<any>;
   categories: Array<any>;
   genders: Array<any>;
@@ -278,6 +279,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
           this.qde = result;
           this.applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
+
+          this.setRelationShip();
 
           if(this.qde.application.auditTrailDetails.screenPage == screenPages['references']) {
             this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
@@ -848,6 +851,33 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             this.selectedTiltle2 = this.defaultItem;
           }
       console.log(this.titles);
+    }
+  }
+  setRelationShip(){
+    if(this.qde.application.applicants[0].maritalStatus.status != "2"){
+      const relationShipData = this.relationships.filter((val) =>{
+
+        if(this.qde.application.applicants[0].maritalStatus.status != "1"){
+          if(val.key != "Spouse"){
+            return val;
+          }
+        }
+        else{
+          if(val.key != "Spouse" && val.key != "Son" && val.key != "Daughter")
+          {
+            return val;
+          }
+        }
+      })
+      this.relationships = relationShipData;
+    }
+    else{
+      const relationShipData = this.relationships.filter((val) =>{
+        if(val.key != "Spouse"){
+          return val;
+        }
+      })
+      this.relationships1 = relationShipData;
     }
   }
 }
