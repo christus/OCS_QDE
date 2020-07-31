@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, DoCheck, Output, EventEmitter } from '@angular/core';
-import { multiSelectStatus } from "../../app.constants";
+//import { multiSelectStatus } from "../../app.constants";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
 
@@ -49,7 +49,8 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit() {
-    this.userStatus = multiSelectStatus;
+   //this.userStatus = multiSelectStatus;
+  // this.userStatus = this.getFilterUserBranchDetails()
     this.dropdownSettings = {
       singleSelection: false,
       idField: "value",
@@ -68,61 +69,61 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
       this.filterPrefillData(this.filterPrefill);
     }
 
-    this.getFilterUserEmpDetails();
+    this.getFilterUserBranchDetails(this.filterEmployee.toString());
   }
 
 
-  getFilterUserEmpDetails() {
-    try {
-      this.ngxService.start();
-      if (localStorage.getItem("token") && localStorage.getItem("userId")) {
-        const startDate = new Date();
-        console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
-        this.requestData = {
-            "userId": localStorage.getItem('userId')
-        }
-      //   "processId": environment.api.userEmployee.processId,
-      //   "ProcessVariables": {
-      // },
-      // "projectId": environment.api.userEmployee.projectId
-        this.qdeHttp.getUserEmpDetails(this.requestData).subscribe((res: any) => {
-          const endDate = new Date();
-          console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+  // getFilterUserEmpDetails() {
+  //   try {
+  //     this.ngxService.start();
+  //     if (localStorage.getItem("token") && localStorage.getItem("userId")) {
+  //       const startDate = new Date();
+  //       console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+  //       this.requestData = {
+  //           "userId": localStorage.getItem('userId')
+  //       }
+  //     //   "processId": environment.api.userEmployee.processId,
+  //     //   "ProcessVariables": {
+  //     // },
+  //     // "projectId": environment.api.userEmployee.projectId
+  //       this.qdeHttp.getUserEmpDetails(this.requestData).subscribe((res: any) => {
+  //         const endDate = new Date();
+  //         console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
 
-          if (res["Error"] && res["Error"] == 0) {
-            // console.log("res['ProcessVariables'] dataNew", res.ProcessVariables);
-            const result = res.ProcessVariables.outputUsers;
-            console.log("res['ProcessVariables'] dataNew", result);
-            this.getFilterUserBranchDetails(result);
-            this.userEmployee = Array.from(result.split(","));
-          } else if (res["login_required"] && res["login_required"] === true) {
-            this.utilService.clearCredentials();
-          } else {
+  //         if (res["Error"] && res["Error"] == 0) {
+  //           // console.log("res['ProcessVariables'] dataNew", res.ProcessVariables);
+  //           const result = res.ProcessVariables.outputUsers;
+  //           console.log("res['ProcessVariables'] dataNew", result);
+  //           this.getFilterUserBranchDetails(result);
+  //           this.userEmployee = Array.from(result.split(","));
+  //         } else if (res["login_required"] && res["login_required"] === true) {
+  //           this.utilService.clearCredentials();
+  //         } else {
 
-            if (res["ErrorMessage"]) {
-              alert(res["ErrorMessage"]);
-            } else {
-              console.log("error ", res);
-              this.utilService.clearCredentials();
-            }
-            return;
-          }
-        },
-          error => {
-            console.log(error);
-          }
-        );
-      }
-    } catch (ex) {
-      alert(ex.message);
-    } finally {
-      this.ngxService.stop();
-    }
-  }
+  //           if (res["ErrorMessage"]) {
+  //             alert(res["ErrorMessage"]);
+  //           } else {
+  //             console.log("error ", res);
+  //             this.utilService.clearCredentials();
+  //           }
+  //           return;
+  //         }
+  //       },
+  //         error => {
+  //           console.log(error);
+  //         }
+  //       );
+  //     }
+  //   } catch (ex) {
+  //     alert(ex.message);
+  //   } finally {
+  //     this.ngxService.stop();
+  //   }
+  // }
 
 
 
-  getFilterUserBranchDetails(outputUsers: string) {
+  getFilterUserBranchDetails(outputFilters: string) {
     try {
       this.ngxService.start();
       if (localStorage.getItem("token") && localStorage.getItem("userId")) {
@@ -130,7 +131,7 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
         console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
         this.requestData = {
           "userId": localStorage.getItem('userId'),
-          "outputUsers": outputUsers
+          "outputUsers": outputFilters
         }
         this.qdeHttp.getBranchDetails(this.requestData).subscribe((res: any) => {
           const endDate = new Date();
@@ -144,6 +145,8 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
             this.userZone = res.ProcessVariables.zoneList;
             this.userRegion = res.ProcessVariables.regionList;
             this.tempBranch = this.filterEmployee.length;
+            this.userEmployee = res.ProcessVariables.userList;
+            this.userStatus = res.ProcessVariables.statusFilter;
 
             if (this.filterEmployee.length !== this.tempBranch) {
               this.filterState = this.filterState.length ? this.userState.filter(val => !this.filterState.includes(val.value)) : [];
