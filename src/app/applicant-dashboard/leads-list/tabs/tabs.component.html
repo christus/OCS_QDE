@@ -1,6 +1,5 @@
 <ul class="nav nav-tabs tabs-head">
-  <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.showFilter ? '' : tab.active"
-    class="tab-link" [class.tab-disabled]="tab.showFilter">
+  <li *ngFor="let tab of tabs" (click)="selectTab(tab)" class="tab-link" [class.active]="tab.active">
     <a>{{tab.title}}</a>
   </li>
 </ul>

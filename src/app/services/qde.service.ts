@@ -56,7 +56,6 @@ export class QdeService {
             totalWorkExperience: null
           },
           pan: {
-            
             panNumber: "",
             panImage: "",
             docType: null,
@@ -135,7 +134,10 @@ export class QdeService {
           organizationDetails: {
             nameOfOrganization: "",
             dateOfIncorporation: "",
-            constitution: ""
+            constitution: "",
+            contactPersonName: "",
+            contactPersonMobileNumber: "",
+            contactPersonEmailId: ""
           },
           registeredAddress: {
             registeredAddress: "",
@@ -256,13 +258,13 @@ export class QdeService {
         }
       },
       leadCreate: {
-        name : "",
-        mobileNumber : null,
-        address : "",
-        zipcode : null,
-        emailId : "",
-        loanAmount : null,
-        loanType : null
+        name: "",
+        mobileNumber: null,
+        address: "",
+        zipcode: null,
+        emailId: "",
+        loanAmount: null,
+        loanType: null
       },
       offlinePayments: {
         chequeDrawn: "",
@@ -290,8 +292,8 @@ export class QdeService {
     return this.qde;
   }
 
-  setQde(qde: Qde): void {    
-    this.qde = qde;   
+  setQde(qde: Qde): void {
+    this.qde = qde;
     this.qdeSource$.next(qde);
   }
 
@@ -301,63 +303,63 @@ export class QdeService {
    * Filter Object with only filled values 
    */
   getFilteredJson(arg) {
-    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
+    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({ key, value })) : arg;
 
     var newObj = {};
-  
-    a.forEach((obj ,index) => {
+
+    a.forEach((obj, index) => {
 
       // Filter Empty Values
-      if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+      if (obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
         newObj[obj.key] = obj.value;
       } else {
-        if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+        if (obj.value == null || obj.value == undefined || obj.value == NaN) {
           delete obj.key;
           return;
-        } else if(obj.value.constructor == String) {
-          if(obj.value == "") {
-              delete obj.key;
-              return;
-          } else {
-            newObj[obj.key] = obj.value;
-            return;
-          }
-        } else if(obj.value.constructor == Boolean) {
-          if(obj.value == null) {
+        } else if (obj.value.constructor == String) {
+          if (obj.value == "") {
             delete obj.key;
             return;
           } else {
             newObj[obj.key] = obj.value;
             return;
           }
-        }else if(obj.value.constructor == Number) {
-          if(obj.value == null) {
+        } else if (obj.value.constructor == Boolean) {
+          if (obj.value == null) {
             delete obj.key;
             return;
           } else {
             newObj[obj.key] = obj.value;
             return;
           }
-        } else if(obj.value.constructor == Array) {
-          if(obj.value.length == 0) {
+        } else if (obj.value.constructor == Number) {
+          if (obj.value == null) {
+            delete obj.key;
+            return;
+          } else {
+            newObj[obj.key] = obj.value;
+            return;
+          }
+        } else if (obj.value.constructor == Array) {
+          if (obj.value.length == 0) {
             delete obj.key;
             return;
           } else {
             let f = obj.value.map((val) => {
               return this.getFilteredJson(val);
             });
-            if(f.length == 0) {
+            if (f.length == 0) {
               delete obj.key;
             } else {
               newObj[obj.key] = f;
             }
           }
-        } else if(obj.value.constructor == Object) {
-          if(Object.keys(obj.value).length == 0) {
+        } else if (obj.value.constructor == Object) {
+          if (Object.keys(obj.value).length == 0) {
             delete obj.key;
           } else {
             let f = this.getFilteredJson(obj.value)
-            if(Object.keys(f).length == 0) {
+            if (Object.keys(f).length == 0) {
               delete obj.key;
             } else {
               newObj[obj.key] = f;
@@ -480,7 +482,10 @@ export class QdeService {
       organizationDetails: {
         nameOfOrganization: "",
         dateOfIncorporation: "",
-        constitution: ""
+        constitution: "",
+        contactPersonName: "",
+        contactPersonMobileNumber: "",
+        contactPersonEmailId: ""
       },
       registeredAddress: {
         registeredAddress: "",
@@ -541,7 +546,7 @@ export class QdeService {
           screenPage: "",
           tabPage: ""
         },
-        applicationFormNumber:"",
+        applicationFormNumber: "",
         ocsNumber: "",
         loanAmount: "",
         tenure: "",
@@ -657,7 +662,10 @@ export class QdeService {
             organizationDetails: {
               nameOfOrganization: "",
               dateOfIncorporation: "",
-              constitution: ""
+              constitution: "",
+              contactPersonName: "",
+              contactPersonMobileNumber: "",
+              contactPersonEmailId: ""
             },
             registeredAddress: {
               registeredAddress: "",
@@ -772,13 +780,13 @@ export class QdeService {
           }
         },
         leadCreate: {
-          name : "",
-          mobileNumber : null,
-          address : "",
-          zipcode : null,
-          emailId : "",
-          loanAmount : null,
-          loanType : null
+          name: "",
+          mobileNumber: null,
+          address: "",
+          zipcode: null,
+          emailId: "",
+          loanAmount: null,
+          loanType: null
         },
         offlinePayments: {
           chequeDrawn: "",
@@ -825,18 +833,18 @@ export class QdeService {
   getModifiedObject(current, mew) {
 
     let temp;
-    if(current && current.constructor == Object) {
+    if (current && current.constructor == Object) {
       temp = {};
-      if(mew != null) {
+      if (mew != null) {
         Object.keys(current).forEach((e, index) => {
           temp[e] = this.getModifiedObject(current[e], mew[e]);
         });
       } else {
         temp = current;
       }
-    } else if(current && current.constructor == Array) {
+    } else if (current && current.constructor == Array) {
       temp = [];
-      if(mew != null) {
+      if (mew != null) {
         current.forEach((e, index) => {
           temp.push(this.getModifiedObject(current[index], mew[index]));
         });
@@ -844,148 +852,148 @@ export class QdeService {
         temp = current;
       }
     } else {
-      temp = mew ? mew: current;
+      temp = mew ? mew : current;
     }
     return temp;
   }
 
-  getValidateApplication(arg){
-  var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
+  getValidateApplication(arg) {
+    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({ key, value })) : arg;
 
-  var newObj = {};
+    var newObj = {};
 
-  a.forEach((obj ,index) => {
+    a.forEach((obj, index) => {
 
-    // Filter Empty Values
-    if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
-      newObj[obj.key] = obj.value;
-    } else {
-      if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+      // Filter Empty Values
+      if (obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+        newObj[obj.key] = obj.value;
+      } else {
+        if (obj.value == null || obj.value == undefined || obj.value == NaN) {
           newObj[obj.key] = obj.value;
-        return;
-      } else if(obj.value.constructor == String) {
-        if(obj.value == "") {
+          return;
+        } else if (obj.value.constructor == String) {
+          if (obj.value == "") {
             newObj[obj.key] = obj.value;
             return;
-        } else {
+          } else {
             delete obj.key;
             return;
           }
-      } else if(obj.value.constructor == Boolean) {
-        if(obj.value == null) {
-          newObj[obj.key] = obj.value;
-          // delete obj.key;
-          return;
-        } 
-        else {
-          delete obj.key;
-          // newObj[obj.key] = obj.value;
-          return;
-        }
-      }else if(obj.value.constructor == Number) {
-        if(obj.value == null) {
-          newObj[obj.key] = obj.value;
-          // delete obj.key;
-          return;
-        } else {
-          delete obj.key;
-          // newObj[obj.key] = obj.value;
-          return;
-        }
-      } else if(obj.value.constructor == Array) {
-        if(obj.value.length != 0) {
-          let f = obj.value.map((val) => {
-            return this.getValidateApplication(val);
-          });
-          if(f.length != 0) {
-            newObj[obj.key] = f;
+        } else if (obj.value.constructor == Boolean) {
+          if (obj.value == null) {
+            newObj[obj.key] = obj.value;
             // delete obj.key;
-          } 
-        }
-          
-      } else if(obj.value.constructor == Object) {
-        if(Object.keys(obj.value).length != 0) {
-          let f = this.getValidateApplication(obj.value)
-          if(Object.keys(f).length != 0) {
-            newObj[obj.key] = f;
+            return;
+          }
+          else {
+            delete obj.key;
+            // newObj[obj.key] = obj.value;
+            return;
+          }
+        } else if (obj.value.constructor == Number) {
+          if (obj.value == null) {
+            newObj[obj.key] = obj.value;
             // delete obj.key;
-          } 
-        }
-      }
-    }
-  });
-
-  return newObj;
-}
-
-getOnlyKeyValues(arg){
-  {
-    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
-  
-    var newObj = [];
-  
-    a.forEach((obj ,index) => {
-      if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
-        newObj.push(obj.value);
-      } else {
-        if(obj.value == null || obj.value == undefined || obj.value == NaN) {
-          delete obj.key;
-          return;
-        } else if(obj.value.constructor == String) {
-          if(obj.value == "") {
-              delete obj.key;
-              return;
+            return;
           } else {
-            newObj.push(obj.value);
+            delete obj.key;
+            // newObj[obj.key] = obj.value;
             return;
           }
-        } else if(obj.value.constructor == Boolean) {
-          if(obj.value == null) {
-            delete obj.key;
-            return;
-          } else {
-            newObj.push(obj.value);
-            return;
-          }
-        }else if(obj.value.constructor == Number) {
-          if(obj.value == null) {
-            delete obj.key;
-            return;
-          } else {
-            newObj.push(obj.value);
-            return;
-          }
-        } else if(obj.value.constructor == Array) {
-          if(obj.value.length == 0) {
-            delete obj.key;
-            return;
-          } else {
+        } else if (obj.value.constructor == Array) {
+          if (obj.value.length != 0) {
             let f = obj.value.map((val) => {
-              return this.getFilteredJson(val);
+              return this.getValidateApplication(val);
             });
-            if(f.length == 0) {
-              delete obj.key;
-            } else {
+            if (f.length != 0) {
               newObj[obj.key] = f;
+              // delete obj.key;
             }
           }
-        } else if(obj.value.constructor == Object) {
-          if(Object.keys(obj.value).length == 0) {
-            delete obj.key;
-          } else {
-            let f = this.getFilteredJson(obj.value)
-            if(Object.keys(f).length == 0) {
-              delete obj.key;
-            } else {
+
+        } else if (obj.value.constructor == Object) {
+          if (Object.keys(obj.value).length != 0) {
+            let f = this.getValidateApplication(obj.value)
+            if (Object.keys(f).length != 0) {
               newObj[obj.key] = f;
+              // delete obj.key;
             }
           }
         }
       }
-
     });
-    console.log("object key values",newObj)
+
     return newObj;
   }
-}
+
+  getOnlyKeyValues(arg) {
+    {
+      var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({ key, value })) : arg;
+
+      var newObj = [];
+
+      a.forEach((obj, index) => {
+        if (obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+          newObj.push(obj.value);
+        } else {
+          if (obj.value == null || obj.value == undefined || obj.value == NaN) {
+            delete obj.key;
+            return;
+          } else if (obj.value.constructor == String) {
+            if (obj.value == "") {
+              delete obj.key;
+              return;
+            } else {
+              newObj.push(obj.value);
+              return;
+            }
+          } else if (obj.value.constructor == Boolean) {
+            if (obj.value == null) {
+              delete obj.key;
+              return;
+            } else {
+              newObj.push(obj.value);
+              return;
+            }
+          } else if (obj.value.constructor == Number) {
+            if (obj.value == null) {
+              delete obj.key;
+              return;
+            } else {
+              newObj.push(obj.value);
+              return;
+            }
+          } else if (obj.value.constructor == Array) {
+            if (obj.value.length == 0) {
+              delete obj.key;
+              return;
+            } else {
+              let f = obj.value.map((val) => {
+                return this.getFilteredJson(val);
+              });
+              if (f.length == 0) {
+                delete obj.key;
+              } else {
+                newObj[obj.key] = f;
+              }
+            }
+          } else if (obj.value.constructor == Object) {
+            if (Object.keys(obj.value).length == 0) {
+              delete obj.key;
+            } else {
+              let f = this.getFilteredJson(obj.value)
+              if (Object.keys(f).length == 0) {
+                delete obj.key;
+              } else {
+                newObj[obj.key] = f;
+              }
+            }
+          }
+        }
+
+      });
+      console.log("object key values", newObj)
+      return newObj;
+    }
+  }
 }

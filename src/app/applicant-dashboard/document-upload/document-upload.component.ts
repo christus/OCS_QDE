@@ -222,6 +222,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   fileWriteOption: writeOption;
 
 
+  mandatoryDataReq: any;
+
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -516,8 +519,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           this.isSubmitDisabled = true;
           this.isErrorModal = true;
           this.errorMessage
-          let mandatoryDataReq = JSON.parse( res['ProcessVariables']['description']);
-          this.getDocumetsDataDetails(mandatoryDataReq);
+          this.mandatoryDataReq = JSON.parse( res['ProcessVariables']['description']);
+          this.getDocumetsDataDetails(this.mandatoryDataReq);
 
         }
       },
@@ -585,6 +588,47 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         }
       }
     }
+  }
+
+
+
+  submitError() {
+    this.isErrorModal = false;
+    if(this.mandatoryDataReq) {
+       this.getDocumetsDataDetailsCheck();
+    }
+  }
+
+  getDocumetsDataDetailsCheck(){
+
+    let routePageName = ''
+    let myGetErrorObject = this.mandatoryDataReq;
+    if (myGetErrorObject["applicants"]){
+      if (myGetErrorObject["applicants"].length > 0) {      
+        if(myGetErrorObject["applicants"][0]["isMainApplicant"]) {
+          routePageName = "/applicant/"+this.applicationId;
+          this.mandatoryDataReq = ''
+          this.router.navigate([routePageName])
+        }  else    {
+          routePageName = "/applicant/"+this.applicationId+"/co-applicant";
+          this.mandatoryDataReq = ''
+          this.router.navigate([routePageName])
+
+        }            
+        
+      }
+    } else if(myGetErrorObject["loanDetails"]){
+      routePageName = "/loan/"+this.applicationId;
+      this.mandatoryDataReq = ''
+      this.router.navigate([routePageName])
+    
+    } else if(myGetErrorObject["Documents"]){
+      this.mandatoryDataReq = ''
+       this.router.navigate(['/document-uploads/'+this.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}})
+     
+    }
+
+    
   }
 
   addRemoveEmailField() {

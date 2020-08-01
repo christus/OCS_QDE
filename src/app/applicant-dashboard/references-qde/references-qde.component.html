@@ -259,7 +259,7 @@
                           <kendo-dropdownlist [readonly]="isReadOnly" 
                           [defaultItem]="defaultItem"
                             class="form-control"
-                            [data]="relationships" 
+                            [data]="qde.application.applicants[0].maritalStatus.status == '2'? relationships1 : relationships" 
                             textField="key"
                             valueField="value"
                             name="relationShip"

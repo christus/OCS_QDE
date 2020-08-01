@@ -66,7 +66,4 @@
   border-top: 7px solid #004a80;
   z-index: 2;
 }
-.tab-disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
+

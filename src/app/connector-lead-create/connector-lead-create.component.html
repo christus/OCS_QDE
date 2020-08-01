@@ -73,10 +73,13 @@
                   <form #leadForm="ngForm" class="bs-form" autocomplete="off" (ngSubmit)="leadSaveConnector(leadForm)">
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="name" minlength="2" autocomplete="off"
+                          id="name" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.name"
                           pattern="{{regexPattern.firstName}}"
-                          name="firstName" #fName="ngModel" fieldFill required/>
+                          name="firstName" 
+                          [maxlength]="minMaxValues['Name']?.maxLength" 
+                          [minlength]="minMaxValues['Name']?.minValue"
+                          #fName="ngModel" fieldFill required/>
                         <label for="name">Full name</label>    
                         <div *ngIf="(fName.touched || fName.dirty) && fName.invalid"
                                 class="invalid-feedback">
@@ -89,9 +92,9 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="mobNumber" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
-                          #phNumber="ngModel" minlength="10" maxlength="10"
+                          #phNumber="ngModel" [minlength]="minMaxValues['Mobile_Number']?.minValue" [maxlength]="minMaxValues['Mobile_Number']?.maxValue"
                           pattern="{{regexPattern.mobileNumber}}"
-                          name="mobileNumber" fieldFill required/>
+                          name="mobileNumber" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
                         <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(phNumber.value)">
                                 {{errors.leadCreate.mobileNo.wrong}}</div>
@@ -106,7 +109,8 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="address" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.address"
-                          pattern="{{regexPattern.address}}" minlength="2"
+                          pattern="{{regexPattern.address}}" [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                          [minlength]="minMaxValues['Address_Line']?.minValue"
                           name="addresss" #addresss="ngModel" fieldFill required/>
                         <label for="address">Address</label>   
                         <div *ngIf="(addresss.touched || addresss.dirty) && addresss.invalid"
@@ -120,14 +124,17 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="zipcode" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
-                          pattern="{{regexPattern.pincode}}" maxlength="6" minlength="6"
-                          name="pincode" #pincode="ngModel" fieldFill required/>
+                          pattern="{{regexPattern.pincode}}" (input)="onPinCodeChange($event)"
+                          [minlength]="minMaxValues['Pincode']?.minValue"
+                          [maxlength]="minMaxValues['Pincode']?.maxLength"
+                          name="pincode" #pincode="ngModel" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
                             <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
                                 class="invalid-feedback">
                              <div *ngIf="pincode.errors?.required">{{errors.leadCreate.pincode.required}}</div>
                               <div *ngIf="pincode.errors?.pattern">{{errors.leadCreate.pincode.invalid}}</div>
                             </div>
+                            <div *ngIf="isValidPincode" class="invalid-feedback">Please enter a valid pincode</div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
@@ -136,6 +143,7 @@
                           name="email" #email="ngModel" 
                           pattern="{{regexPattern.email}}"
                           (ngModelChange)="onPreferredEmailChange($event, email)"
+                          (keypress)="keyPress($event)"
                           fieldFill required/>
                         <label for="emailId">Email ID</label>
                         <div *ngIf="(email.touched || email.dirty) && email.invalid"
@@ -152,6 +160,7 @@
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
+                          (keypress)="keyPress($event)"
                           fieldFill 
                           required
                           pattern="{{regexPattern.amount}}"
@@ -180,19 +189,25 @@
 
                         <div class="form-group">
                             <span class="control-title">Branch Name</span>
-                            <kendo-dropdownlist
+                            <!-- <kendo-dropdownlist
                               [defaultItem]="defaultItem"
                               class="form-control"
                               name="branchList"
                               [data]="branchList" 
                               textField="key"
                               valueField="value"
+                              (selectionChange)= "selectedBranchData($event)"
                               [(ngModel)]="branchId">selectedLoanType
-                              <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
-                            </kendo-dropdownlist>
+                            </kendo-dropdownlist> -->
+                            <ng-multiselect-dropdown class="form-control" [placeholder]="'Choose your branch'" [data]="branchList" [settings]="dropdownSettings" (onSelect)="selectedBranchData($event)"
+                            [(ngModel)]="branchId" name="branchList"
+                            (onFilterChange)="getAllBranch($event)"
+                            required>
+                          </ng-multiselect-dropdown>
+                            
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" >
                             <input 
                             type="text"
                             autocomplete="off"
@@ -202,6 +217,9 @@
                             #searchSMSA ="ngModel"
                             [(ngModel)]="valueSMSA"
                             (input)="searchSMSAId($event)"
+                            (click)="getSASMIDData()"
+                           
+                            [disabled] = "!enableSASMId"
                             fieldFill
                              >
 
@@ -241,14 +259,14 @@
                         </div>
                       <div class="btn-wrap" *ngIf="enableSASMId">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode"
                           >Submit</button>
                       </div>
                       <div class="btn-wrap" *ngIf="!enableSASMId">
                         <button class="btn btn-primary"
-                        [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0}"
-                        [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0"
+                        [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || isValidPincode}"
+                        [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || isValidPincode"
                         >Submit</button>
                     </div>
                   </form>

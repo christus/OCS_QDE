@@ -8,6 +8,7 @@ import * as Swiper from "swiper/dist/js/swiper.js";
 import { Options } from "ng5-slider";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import Qde from 'src/app/models/qde.model';
+import { statuses } from '../../app.constants';
 
 @Component({
   selector: 'app-eligibility-check',
@@ -85,6 +86,10 @@ export class EligibilityCheckComponent implements OnInit {
 
   fragments = ["eligibility1", "eligibility2"];
 
+  isErrorModal: boolean;
+  errorMsg: string;
+  
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -93,7 +98,7 @@ export class EligibilityCheckComponent implements OnInit {
     private qdeHttp: QdeHttpService,
     private qdeService: QdeService) {
 
-      
+      this.errorMsg = ''
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);
@@ -227,6 +232,7 @@ export class EligibilityCheckComponent implements OnInit {
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
       if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes'){
         this.showEligible = true;
+        this.setAps();
         console.log("res: ", res['ProcessVariables'].toLowerCase);
         console.log(this.firstname)
         this.firstname = res['ProcessVariables']['firstName'];
@@ -245,6 +251,31 @@ export class EligibilityCheckComponent implements OnInit {
       // else{
       //   alert("Server is Down!!!");
       // }
+    });
+  }
+
+  setAps(){
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+
+      // Temporary 
+      if(res["ProcessVariables"]['responseApplicationId'] != null) {
+        if(res['ProcessVariables']['status']){
+          this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res1=>{
+            if(res1["ProcessVariables"]["status"] == true){
+              this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res2 => {}, err => {});
+              this.isErrorModal = true;
+              this.errorMsg = "APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId'];
+             
+              // alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+            }
+            else{
+              return
+            }
+          })
+        }
+      } else {
+        // Throw Invalid Pan Error
+      }
     });
   }
 

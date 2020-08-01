@@ -1167,7 +1167,52 @@
                           <label for="org-nam">Name of Organization</label>
                       </div>
                   </div>
+                  <div class="col-6 org-name">
+                    <div class="form-group">
+                        <input type="text"
+                                class="form-control" 
+                                id="contact-person-name"
+                                [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.contactPersonName"
+                                name="contactPersonName"
+                                fieldFill
+                                spellcheck="false"
+                                required />
+                        <label for="contact-person-name">Contact Person Name</label>
+                    </div>
+                </div>
               </div>
+              <div class="row">
+               
+                <div class="col-6 org-name">
+                    <div class="form-group">
+                        <input type="text"
+                                class="form-control" 
+                                id="contact-person-mobile-number"
+                                [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.contactPersonMobileNumber"
+                                name="contact-person-mobile-number"
+                                fieldFill
+                                spellcheck="false"
+                                required />
+                        <label for="org-nam">Contact Person Mobile Number</label>
+                    </div>
+                </div>
+
+                <div class="col-6 org-name">
+                    <div class="form-group">
+                        <input type="text"
+                                class="form-control" 
+                                id="contact-person-emailId"
+                                [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.contactPersonEmailId"
+                                name="contact-person-emailId"
+                                fieldFill
+                                spellcheck="false"
+                                required />
+                        <label for="org-nam">Contact Person Email Id</label>
+                    </div>
+                </div>
+
+            </div>
+
               <div class="row">
                   <div class="col-6">
                           <div class="form-group">
@@ -1214,29 +1259,26 @@
                               </div>
                   
                         </div>
-              </div>
-              <div class="row">
-                    <div class="col-6">
-                      <div class="form-group last">
-                          <span class="control-title">Constitution</span>
-                          <!-- <kendo-dropdownlist class="form-control"
-                                              [data]="constitutions" 
-                                              textField="key"
-                                              valueField="value"
-                                              name="constitution"
-                                              [(ngModel)]="selectedConstitution">
-                          </kendo-dropdownlist>   -->
-                          <input type="text"
-                                      class="form-control" 
-                                      
-                                      [(ngModel)]="selectedConstitution"
-                                      name="constitution"
-                                      fieldFill
-                                      spellcheck="false"
-                                      required />
-                      </div>
-                  </div>
-
+                        <div class="col-6">
+                            <div class="form-group last">
+                                <span class="control-title">Constitution</span>
+                                <!-- <kendo-dropdownlist class="form-control"
+                                                    [data]="constitutions" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="constitution"
+                                                    [(ngModel)]="selectedConstitution">
+                                </kendo-dropdownlist>   -->
+                                <input type="text"
+                                            class="form-control" 
+                                            
+                                            [(ngModel)]="selectedConstitution"
+                                            name="constitution"
+                                            fieldFill
+                                            spellcheck="false"
+                                            required />
+                            </div>
+                        </div>
               </div>
           </div>
   </div>
