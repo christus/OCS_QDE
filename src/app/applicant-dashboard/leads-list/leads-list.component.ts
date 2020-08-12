@@ -35,6 +35,7 @@ interface leadData {
   zipcode: string,
   url: string,
   queryParams: string,
+  ocsNumber ?: string
 }
 interface Item {
   key: string,
@@ -704,6 +705,7 @@ export class LeadsListComponent implements OnInit {
       emailId: leadValue['emailId'],
       mobileNumber: leadValue['mobileNumber'],
       zipcode: leadValue['zipcode'],
+      ocsNumber: leadValue['ocsNumber'],
       url: leadValue['url'],
       queryParams: leadValue['queryParams'],
     }

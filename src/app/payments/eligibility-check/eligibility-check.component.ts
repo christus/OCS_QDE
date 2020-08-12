@@ -232,7 +232,6 @@ export class EligibilityCheckComponent implements OnInit {
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
       if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes'){
         this.showEligible = true;
-        this.setAps();
         console.log("res: ", res['ProcessVariables'].toLowerCase);
         console.log(this.firstname)
         this.firstname = res['ProcessVariables']['firstName'];

@@ -153,7 +153,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
             const roles = localStorage.getItem('roles');
             const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-            if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
+            if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
               this.enableSASMId = true;
 
               this.commonDataService.branchList$.subscribe( value =>
@@ -175,7 +175,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     const roles = localStorage.getItem('roles');
     const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
 
-    if(checkRoleName.includes('connector') || checkRoleName.includes('rp') || checkRoleName.includes('dma')) {
+    if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
       return;
     }
     const branchData = {

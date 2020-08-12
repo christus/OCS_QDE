@@ -77,8 +77,8 @@
                           [(ngModel)]="qde.application.leadCreate.name"
                           pattern="{{regexPattern.firstName}}"
                           name="firstName" 
-                          [maxlength]="minMaxValues['Name']?.maxLength" 
-                          [minlength]="minMaxValues['Name']?.minValue"
+                          [maxlength]="minMaxValues['Lead_Name']?.maxLength" 
+                          [minlength]="minMaxValues['Lead_Name']?.minValue"
                           #fName="ngModel" fieldFill required/>
                         <label for="name">Full name</label>    
                         <div *ngIf="(fName.touched || fName.dirty) && fName.invalid"
@@ -92,7 +92,7 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="mobNumber" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
-                          #phNumber="ngModel" [minlength]="minMaxValues['Mobile_Number']?.minValue" [maxlength]="minMaxValues['Mobile_Number']?.maxValue"
+                          #phNumber="ngModel" [minlength]="minMaxValues['Lead_Mobile_number']?.minValue" [maxlength]="minMaxValues['Lead_Mobile_number']?.maxValue"
                           pattern="{{regexPattern.mobileNumber}}"
                           name="mobileNumber" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
@@ -109,8 +109,8 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="address" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.address"
-                          pattern="{{regexPattern.address}}" [maxlength]="minMaxValues['Address_Line']?.maxLength"
-                          [minlength]="minMaxValues['Address_Line']?.minValue"
+                          pattern="{{regexPattern.address}}" [maxlength]="minMaxValues['Lead_Address']?.maxLength"
+                          [minlength]="minMaxValues['Lead_Address']?.minValue"
                           name="addresss" #addresss="ngModel" fieldFill required/>
                         <label for="address">Address</label>   
                         <div *ngIf="(addresss.touched || addresss.dirty) && addresss.invalid"
@@ -125,8 +125,8 @@
                           id="zipcode" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
                           pattern="{{regexPattern.pincode}}" (input)="onPinCodeChange($event)"
-                          [minlength]="minMaxValues['Pincode']?.minValue"
-                          [maxlength]="minMaxValues['Pincode']?.maxLength"
+                          [minlength]="minMaxValues['Lead_Pincode']?.minValue"
+                          [maxlength]="minMaxValues['Lead_Pincode']?.maxLength"
                           name="pincode" #pincode="ngModel" (keypress)="keyPress($event)" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
                             <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
@@ -156,7 +156,7 @@
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="loanAmt" autocomplete="off"
-                          [maxlength]="minMaxValues['Loan_amount'].maxLength"
+                          [maxlength]="minMaxValues['Lead_Loan_amount'].maxLength"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
@@ -164,7 +164,7 @@
                           fieldFill 
                           required
                           pattern="{{regexPattern.amount}}"
-                          (input)="checkAmountLimit($event,minMaxValues['Loan_amount'].minValue,minMaxValues['Loan_amount'].maxValue)"/>
+                          (input)="checkAmountLimit($event,minMaxValues['Lead_Loan_amount'].minValue,minMaxValues['Lead_Loan_amount'].maxValue)"/>
                         <label for="loanAmt">Loan Amount</label>    
                         <div class="invalid-feedback">
                             <div class="invalid-feedback" *ngIf="isLessAmount">{{errors.leadCreate.amount.minamount}}{{requirMinAmout}}</div>
@@ -259,8 +259,8 @@
                         </div>
                       <div class="btn-wrap" *ngIf="enableSASMId">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode || !valueSMSA}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode || !valueSMSA"
                           >Submit</button>
                       </div>
                       <div class="btn-wrap" *ngIf="!enableSASMId">
