@@ -102,6 +102,13 @@ export class QdeHttpService {
   }
 
   createOrUpdatePersonalDetails(qde) {
+
+    if(qde.application) {
+      if(qde.application.offlineSave) {
+        qde.application.offlineSave = false;
+      }
+    }
+
     const qdeRequestEntity: RequestEntity = {
       processId: environment.api.save.processId,
       ProcessVariables: {
